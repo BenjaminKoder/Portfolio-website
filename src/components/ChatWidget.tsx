@@ -53,10 +53,21 @@ const ChatWidget = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
+        const responseText = await response.text();
+        
+        // Try to parse as JSON first, otherwise use plain text
+        let aiResponse;
+        try {
+          const data = JSON.parse(responseText);
+          aiResponse = data.response || responseText;
+        } catch {
+          // If not JSON, use the plain text response
+          aiResponse = responseText;
+        }
+        
         setMessages((prev) => [
           ...prev,
-          { role: "assistant", content: data.response || "Beklager, jeg kunne ikke behandle det spørsmålet." },
+          { role: "assistant", content: aiResponse || "Beklager, jeg kunne ikke behandle det spørsmålet." },
         ]);
       } else {
         throw new Error("Failed to get response");
