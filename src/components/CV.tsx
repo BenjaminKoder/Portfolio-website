@@ -60,13 +60,15 @@ const CV = () => {
           </div>
 
           <div className="text-center mt-12 animate-fade-in">
-            <Button
-              size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
-            >
-              <Download className="h-5 w-5" />
-              Last ned CV
-            </Button>
+            <a href="/CV.pdf" download="Benjamin_Eng_CV.pdf">
+              <Button
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
+              >
+                <Download className="h-5 w-5" />
+                Last ned CV (PDF)
+              </Button>
+            </a>
           </div>
         </div>
       </div>

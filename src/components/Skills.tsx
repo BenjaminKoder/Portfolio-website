@@ -8,19 +8,14 @@ const Skills = () => {
       skills: ["Python", "Java", "JavaScript", "HTML", "CSS"],
     },
     {
-      icon: Globe,
-      title: "Web",
-      skills: ["Supabase", "REST API-er", "Node.js", "Backend-integrasjoner"],
-    },
-    {
       icon: Cpu,
-      title: "Automatisering og AI",
-      skills: ["Make.com", "OpenAI API", "Webhooker", "AI-integrasjoner"],
+      title: "Teknologi",
+      skills: ["Supabase", "Make.com", "OpenAI API"],
     },
     {
       icon: Wrench,
-      title: "Verktøy og Metodikk",
-      skills: ["Git/GitHub", "Lovable", "Figma", "Problemløsning", "Systemutvikling"],
+      title: "Verktøy",
+      skills: ["Git", "GitHub", "Lovable"],
     },
   ];
 
@@ -37,7 +32,7 @@ const Skills = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 animate-fade-in-up">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12 animate-fade-in-up">
             {skillCategories.map((category, index) => {
               const Icon = category.icon;
               return (
