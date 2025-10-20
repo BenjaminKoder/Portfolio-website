@@ -1,4 +1,5 @@
 import { ExternalLink, Code2, Database, Workflow } from "lucide-react";
+import digisagaHero from "@/assets/digisaga-hero.jpg";
 
 const FeaturedProject = () => {
   return (
@@ -56,21 +57,14 @@ const FeaturedProject = () => {
                   {/* Premium frame effect */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 via-primary/20 to-accent/20 rounded-2xl blur-lg opacity-60 group-hover/image:opacity-100 transition-opacity duration-500"></div>
                   
-                  {/* Image container with motherboard placeholder */}
+                  {/* Image container with DigiSaga branding */}
                   <div className="relative aspect-video bg-gradient-to-br from-accent/10 via-background to-primary/10 rounded-xl border border-border/50 overflow-hidden shadow-lg">
-                    {/* Grid pattern overlay for tech aesthetic */}
-                    <div className="absolute inset-0 opacity-20" style={{
-                      backgroundImage: 'linear-gradient(hsl(var(--accent) / 0.1) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--accent) / 0.1) 1px, transparent 1px)',
-                      backgroundSize: '20px 20px'
-                    }}></div>
-                    
-                    {/* Placeholder for motherboard image */}
-                    <div className="relative w-full h-full flex items-center justify-center p-8">
-                      <div className="relative">
-                        <Code2 className="h-20 w-20 text-accent/40 animate-pulse" />
-                        <div className="absolute inset-0 blur-xl bg-accent/20"></div>
-                      </div>
-                    </div>
+                    {/* DigiSaga hero image */}
+                    <img 
+                      src={digisagaHero} 
+                      alt="DigiSaga - Professional IT solutions with AI integration"
+                      className="w-full h-full object-cover"
+                    />
                     
                     {/* Corner accents */}
                     <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent/30"></div>
