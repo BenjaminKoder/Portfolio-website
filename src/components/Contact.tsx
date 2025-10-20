@@ -1,56 +1,27 @@
 import { useState } from "react";
-import { Linkedin, Github, Mail, Send } from "lucide-react";
+import { Linkedin, Github, Mail, Copy, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Contact = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const emailAddress = "bennyeng0612@gmail.com";
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // TODO: Replace with actual Make.com webhook URL
-      const webhookUrl = "YOUR_MAKE_WEBHOOK_URL_HERE";
-      
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          timestamp: new Date().toISOString(),
-        }),
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Melding sendt!",
-          description: "Takk for din henvendelse. Du vil høre fra oss snart.",
-        });
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        throw new Error("Failed to send message");
-      }
-    } catch (error) {
-      toast({
-        title: "Noe gikk galt",
-        description: "Kunne ikke sende meldingen. Vennligst prøv igjen senere.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(emailAddress);
+    toast({
+      title: "E-postadresse kopiert!",
+      description: "E-postadressen er kopiert til utklippstavlen.",
+    });
   };
 
   return (
@@ -66,74 +37,11 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {/* Contact Form */}
-            <div className="animate-fade-in-up">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                    Navn
-                  </label>
-                  <Input
-                    id="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    required
-                    placeholder="Ditt navn"
-                    className="w-full"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                    E-post
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    required
-                    placeholder="din@epost.no"
-                    className="w-full"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                    Melding
-                  </label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    required
-                    placeholder="Din melding..."
-                    rows={5}
-                    className="w-full"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground gap-2"
-                >
-                  <Send className="h-4 w-4" />
-                  {isSubmitting ? "Sender..." : "Send melding"}
-                </Button>
-              </form>
-            </div>
-
-            {/* Social Links */}
+          <div className="max-w-md mx-auto">
             <div className="space-y-6 animate-fade-in">
               <div className="bg-gradient-card border border-border rounded-lg p-6 hover:shadow-lg transition-all duration-300">
                 <h3 className="text-lg font-semibold text-primary mb-4">
-                  Finn meg også her
+                  Finn meg her
                 </h3>
                 <div className="space-y-4">
                   <a
@@ -158,12 +66,47 @@ const Contact = () => {
                     </div>
                     <span className="font-medium">GitHub</span>
                   </a>
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <div className="p-2 bg-accent/10 rounded-lg">
-                      <Mail className="h-5 w-5" />
-                    </div>
-                    <span className="font-medium">Eller bruk kontaktskjemaet</span>
-                  </div>
+                  <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                    <DialogTrigger asChild>
+                      <button className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors group w-full">
+                        <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                          <Mail className="h-5 w-5" />
+                        </div>
+                        <span className="font-medium">Send e-post</span>
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Kontakt meg via e-post</DialogTitle>
+                        <DialogDescription>
+                          Du kan sende meg en e-post direkte eller kopiere adressen.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4 py-4">
+                        <div className="flex items-center justify-center gap-2 p-4 bg-muted rounded-lg">
+                          <Mail className="h-4 w-4 text-muted-foreground" />
+                          <span className="font-medium">{emailAddress}</span>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <Button
+                            onClick={() => window.open(`mailto:${emailAddress}`, '_blank')}
+                            className="gap-2"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                            Åpne e-postklient
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={copyToClipboard}
+                            className="gap-2"
+                          >
+                            <Copy className="h-4 w-4" />
+                            Kopier e-postadresse
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </div>
               </div>
             </div>
