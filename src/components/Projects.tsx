@@ -12,37 +12,32 @@ const Projects = () => {
     {
       title: "Spinner (Database)",
       description: "Dynamisk spinner med datalagring",
-      url: "https://benjaminkoder.github.io/Spillsider/SpinnerDatabase/index.html",
+      url: "https://pilsulator.no/Spillsider/SpinnerTycoon/Spinner.html",
     },
     {
       title: "Spinner (LocalStorage)",
       description: "Spinner med lokal datalagring",
-      url: "https://benjaminkoder.github.io/Spillsider/SpinnerLocal/index.html",
+      url: "https://pilsulator.no/Spillsider/SpinnerTob/saannBenjiVil/index.html",
     },
     {
-      title: "Tallsystemer",
+      title: "Tallsystemer (Terning/Yatzy-side)",
       description: "Interaktiv tallsystemkonverter",
-      url: "https://benjaminkoder.github.io/StorsteProsjekter/Tallsystemer/index.html",
+      url: "https://pilsulator.no/StorsteProsjekter/Terning.html",
     },
     {
-      title: "Mario",
+      title: "Mario (ShyGuy-demo)",
       description: "Plattformspill i nettleser",
-      url: "https://benjaminkoder.github.io/StorsteProsjekter/Mario/index.html",
-    },
-    {
-      title: "Yatzy",
-      description: "Digitalt terningspill",
-      url: "https://benjaminkoder.github.io/StorsteProsjekter/Yatzy/index.html",
+      url: "https://pilsulator.no/StorsteProsjekter/shyguy/index.html",
     },
     {
       title: "Monty Hall",
       description: "Interaktiv simulering av Monty Hall-problemet",
-      url: "https://benjaminkoder.github.io/StorsteProsjekter/MontyHall/index.html",
+      url: "https://pilsulator.no/StorsteProsjekter/4B%20Hendelser/4B%20timearbeid/MontyHall.html",
     },
     {
       title: "Mobil-demo",
       description: "Mobilresponsiv webdemo",
-      url: "https://benjaminkoder.github.io/StorsteProsjekter/Mobil/index.html",
+      url: "https://pilsulator.no/StorsteProsjekter/Mobil.html",
     },
   ];
 
@@ -76,7 +71,7 @@ const Projects = () => {
               >
                 <Button variant="outline" className="gap-2">
                   <Github className="h-4 w-4" />
-                  Se også Python- og Java-prosjekter på GitHub
+                  Se Python- og Java-prosjekter på GitHub
                 </Button>
               </a>
             </div>
