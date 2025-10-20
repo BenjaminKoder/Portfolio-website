@@ -1,103 +1,50 @@
 import ProjectCard from "./ProjectCard";
-import { Code2, Globe, Coffee } from "lucide-react";
+import { Github } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Projects = () => {
-  const pythonProjects = [
-    {
-      title: "Jazz-spill",
-      description: "Rytmespill utviklet med Pygame og objektorientert programmering",
-      url: "",
-      comingSoon: true,
-    },
-    {
-      title: "Hoppespill",
-      description: "Plattformspill bygget med Pygame",
-      url: "",
-      comingSoon: true,
-    },
-    {
-      title: "Flere Python-spill",
-      description: "Spillprosjekter i utvikling",
-      url: "",
-      comingSoon: true,
-    },
-  ];
-
-  const webProjects = [
+  const earlyProjects = [
     {
       title: "HTML5 Canvas spill",
-      description: "Fysikkbasert spill bygget i HTML5 Canvas. Fokus på animasjon og collision detection.",
-      url: "https://pilsulator.no/Spillsider/Canvasgamefreestyle/index.html",
+      description: "Fysikkbasert spill med animasjon og collision detection",
+      url: "https://benjaminkoder.github.io/Spillsider/Canvasgamefreestyle/index.html",
     },
     {
-      title: "Spinner (database)",
-      description: "Dynamisk spinner med datalagring i Supabase",
-      url: "",
-      comingSoon: true,
+      title: "Spinner (Database)",
+      description: "Dynamisk spinner med datalagring",
+      url: "https://benjaminkoder.github.io/Spillsider/SpinnerDatabase/index.html",
+    },
+    {
+      title: "Spinner (LocalStorage)",
+      description: "Spinner med lokal datalagring",
+      url: "https://benjaminkoder.github.io/Spillsider/SpinnerLocal/index.html",
     },
     {
       title: "Tallsystemer",
       description: "Interaktiv tallsystemkonverter",
-      url: "",
-      comingSoon: true,
-    },
-    {
-      title: "Spinner (localStorage)",
-      description: "Spinner med lokal datalagring i nettleseren",
-      url: "",
-      comingSoon: true,
+      url: "https://benjaminkoder.github.io/StorsteProsjekter/Tallsystemer/index.html",
     },
     {
       title: "Mario",
-      description: "Klassisk plattformspill i nettleser",
-      url: "",
-      comingSoon: true,
+      description: "Plattformspill i nettleser",
+      url: "https://benjaminkoder.github.io/StorsteProsjekter/Mario/index.html",
     },
     {
       title: "Yatzy",
-      description: "Digitalt terningspill med regellogikk",
-      url: "",
-      comingSoon: true,
+      description: "Digitalt terningspill",
+      url: "https://benjaminkoder.github.io/StorsteProsjekter/Yatzy/index.html",
     },
     {
       title: "Monty Hall",
       description: "Interaktiv simulering av Monty Hall-problemet",
-      url: "",
-      comingSoon: true,
+      url: "https://benjaminkoder.github.io/StorsteProsjekter/MontyHall/index.html",
     },
-  ];
-
-  const javaProjects = [
     {
-      title: "Doodle Jump",
-      description: "Plattformspill utviklet i JavaFX med objektorientert design",
-      url: "",
-      comingSoon: true,
+      title: "Mobil-demo",
+      description: "Mobilresponsiv webdemo",
+      url: "https://benjaminkoder.github.io/StorsteProsjekter/Mobil/index.html",
     },
   ];
-
-  const renderCategory = (
-    title: string,
-    icon: React.ElementType,
-    projects: Array<{ title: string; description: string; url: string; comingSoon?: boolean }>
-  ) => {
-    const Icon = icon;
-    return (
-      <div className="mb-16 lg:mb-20">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-accent/10 rounded-lg">
-            <Icon className="h-6 w-6 text-accent" />
-          </div>
-          <h3 className="text-2xl lg:text-3xl font-bold text-primary">{title}</h3>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} {...project} />
-          ))}
-        </div>
-      </div>
-    );
-  };
 
   return (
     <section id="prosjekter" className="py-20 lg:py-32">
@@ -107,15 +54,32 @@ const Projects = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
               Prosjekter
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Tekniske prosjekter kategorisert etter programmeringsspråk og teknologi
-            </p>
           </div>
 
           <div className="animate-fade-in-up">
-            {renderCategory("Python-prosjekter", Code2, pythonProjects)}
-            {renderCategory("Web – HTML, CSS & JavaScript", Globe, webProjects)}
-            {renderCategory("Java-prosjekter", Coffee, javaProjects)}
+            <div className="mb-12">
+              <h3 className="text-xl font-semibold text-muted-foreground mb-6">
+                Tidlige prosjekter (utviklet på videregående)
+              </h3>
+              <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {earlyProjects.map((project) => (
+                  <ProjectCard key={project.title} {...project} />
+                ))}
+              </div>
+            </div>
+
+            <div className="text-center pt-8">
+              <a
+                href="https://github.com/BenjaminKoder/Portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="outline" className="gap-2">
+                  <Github className="h-4 w-4" />
+                  Se også Python- og Java-prosjekter på GitHub
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
