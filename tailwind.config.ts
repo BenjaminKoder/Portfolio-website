@@ -121,11 +121,15 @@ export default {
       backgroundImage: {
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-card': 'var(--gradient-card)',
+        'gradient-section': 'var(--gradient-section)',
+        'gradient-featured': 'var(--gradient-featured)',
       },
       boxShadow: {
         'sm': 'var(--shadow-sm)',
         'md': 'var(--shadow-md)',
         'lg': 'var(--shadow-lg)',
+        'premium': 'var(--shadow-premium)',
+        'glow': 'var(--glow-accent)',
       },
     },
   },

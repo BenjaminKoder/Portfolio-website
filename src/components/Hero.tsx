@@ -13,8 +13,12 @@ const Hero = () => {
       id="hjem"
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16"
     >
-      {/* Background gradient */}
+      {/* Background gradient with smooth transition */}
+      <div className="absolute inset-0 bg-gradient-section opacity-40"></div>
       <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+      
+      {/* Smooth bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background/80"></div>
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
