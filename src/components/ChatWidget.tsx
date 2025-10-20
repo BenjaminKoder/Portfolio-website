@@ -40,8 +40,7 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      // TODO: Replace with actual Make.com webhook URL
-      const webhookUrl = "YOUR_MAKE_AI_WEBHOOK_URL_HERE";
+      const webhookUrl = "https://hook.eu2.make.com/h8ikhnbpul7vf54itmycfn6ai2b8kuv2";
       
       const response = await fetch(webhookUrl, {
         method: "POST",
@@ -50,7 +49,6 @@ const ChatWidget = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          timestamp: new Date().toISOString(),
         }),
       });
 
