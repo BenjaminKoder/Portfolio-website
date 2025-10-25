@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { Linkedin, Github, Mail, Copy, ExternalLink } from "lucide-react";
+import { Linkedin, Github, Mail, Copy, ExternalLink, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import {
   Dialog,
   DialogContent,
@@ -11,10 +17,65 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+const contactFormSchema = z.object({
+  name: z.string().trim().min(1, "Navn er påkrevd").max(100, "Navnet må være mindre enn 100 tegn"),
+  email: z.string().trim().email("Ugyldig e-postadresse").max(255, "E-postadressen må være mindre enn 255 tegn"),
+  message: z.string().trim().min(1, "Melding er påkrevd").max(1000, "Meldingen må være mindre enn 1000 tegn"),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
+
 const Contact = () => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const emailAddress = "bennyeng0612@gmail.com";
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("https://hook.eu2.make.com/9d4l5c7bbixikqrnc0tteltkriq6ysxb", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          message: data.message,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Melding sendt!",
+          description: "Takk for din henvendelse. Jeg vil svare så snart som mulig.",
+        });
+        reset();
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Noe gikk galt",
+        description: "Kunne ikke sende meldingen. Vennligst prøv igjen senere.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(emailAddress);
@@ -37,7 +98,7 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className="max-w-md mx-auto">
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             <div className="space-y-6 animate-fade-in">
               <div className="bg-gradient-card border border-border rounded-lg p-6 hover:shadow-lg transition-all duration-300">
                 <h3 className="text-lg font-semibold text-primary mb-4">
@@ -108,6 +169,63 @@ const Contact = () => {
                     </DialogContent>
                   </Dialog>
                 </div>
+              </div>
+            </div>
+
+            <div className="animate-fade-in">
+              <div className="bg-gradient-card border border-border rounded-lg p-6 hover:shadow-lg transition-all duration-300">
+                <h3 className="text-lg font-semibold text-primary mb-4">
+                  Send en melding
+                </h3>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <div>
+                    <Label htmlFor="name">Navn</Label>
+                    <Input
+                      id="name"
+                      {...register("name")}
+                      placeholder="Ditt navn"
+                      className="mt-1.5"
+                    />
+                    {errors.name && (
+                      <p className="text-sm text-destructive mt-1">{errors.name.message}</p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="email">E-post</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      {...register("email")}
+                      placeholder="din@epost.no"
+                      className="mt-1.5"
+                    />
+                    {errors.email && (
+                      <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+                    )}
+                  </div>
+                  <div>
+                    <Label htmlFor="message">Melding</Label>
+                    <Textarea
+                      id="message"
+                      {...register("message")}
+                      placeholder="Skriv din melding her..."
+                      className="mt-1.5 min-h-[120px]"
+                    />
+                    {errors.message && (
+                      <p className="text-sm text-destructive mt-1">{errors.message.message}</p>
+                    )}
+                  </div>
+                  <Button type="submit" disabled={isSubmitting} className="w-full gap-2">
+                    {isSubmitting ? (
+                      <>Sender...</>
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" />
+                        Send melding
+                      </>
+                    )}
+                  </Button>
+                </form>
               </div>
             </div>
           </div>
