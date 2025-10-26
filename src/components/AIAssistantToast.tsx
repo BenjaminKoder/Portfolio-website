@@ -32,10 +32,10 @@ const AIAssistantToast = () => {
           </div>
           <div className="flex-1">
             <p className="text-sm font-medium text-foreground mb-1">
-              Hei! 👋
+              Hei!
             </p>
             <p className="text-sm text-muted-foreground">
-              Visste du at jeg har en AI-assistent? Klikk på chat-ikonet nedenfor! 👇
+              Visste du at jeg har en AI-assistent? Klikk på chat-ikonet nedenfor!
             </p>
           </div>
           <button
