@@ -52,7 +52,7 @@ const Projects = () => {
           <div className="animate-fade-in-up">
             <div className="mb-12">
               <h3 className="text-xl font-semibold text-muted-foreground mb-6">
-                Noen utvalgte gamle småprosjekter (utviklet på videregående)
+                Noen utvalgte gamle småprosjekter i web (utviklet på videregående)
               </h3>
               <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {earlyProjects.map((project) => (
