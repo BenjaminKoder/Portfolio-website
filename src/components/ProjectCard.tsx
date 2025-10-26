@@ -9,8 +9,8 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ title, description, url, comingSoon }: ProjectCardProps) => {
-  return (
-    <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border">
+  const cardContent = (
+    <>
       <CardHeader>
         <CardTitle className="flex items-center justify-between text-primary group-hover:text-accent transition-colors">
           <span>{title}</span>
@@ -26,18 +26,29 @@ const ProjectCard = ({ title, description, url, comingSoon }: ProjectCardProps) 
             Kommer snart
           </span>
         ) : (
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-accent hover:underline text-sm font-medium inline-flex items-center gap-1"
-          >
+          <span className="text-accent text-sm font-medium inline-flex items-center gap-1">
             Besøk prosjekt
             <ExternalLink className="h-4 w-4" />
-          </a>
+          </span>
         )}
       </CardContent>
-    </Card>
+    </>
+  );
+
+  if (comingSoon) {
+    return (
+      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border">
+        {cardContent}
+      </Card>
+    );
+  }
+
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block">
+      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border cursor-pointer">
+        {cardContent}
+      </Card>
+    </a>
   );
 };
 

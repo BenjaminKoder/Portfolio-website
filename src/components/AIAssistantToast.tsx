@@ -24,10 +24,10 @@ const AIAssistantToast = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5 duration-500">
-      <div className="bg-card border-2 border-primary/30 rounded-lg shadow-lg p-4 max-w-sm">
+    <div className="fixed bottom-24 right-6 z-40 animate-in slide-in-from-bottom-5 duration-500">
+      <div className="relative bg-card border-2 border-primary/30 rounded-lg shadow-lg p-4 max-w-sm">
         <div className="flex items-start gap-3">
-          <div className="bg-primary/10 p-2 rounded-full">
+          <div className="bg-primary/10 p-2 rounded-full flex-shrink-0">
             <Bot className="h-5 w-5 text-primary" />
           </div>
           <div className="flex-1">
@@ -35,17 +35,19 @@ const AIAssistantToast = () => {
               Hei! 👋
             </p>
             <p className="text-sm text-muted-foreground">
-              Visste du at jeg har en AI-assistent? Klikk på chat-ikonet nede til høyre!
+              Visste du at jeg har en AI-assistent? Klikk på chat-ikonet nedenfor! 👇
             </p>
           </div>
           <button
             onClick={() => setIsVisible(false)}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
             aria-label="Lukk"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
+        {/* Arrow pointing down to chat button */}
+        <div className="absolute -bottom-2 right-6 w-4 h-4 bg-card border-r-2 border-b-2 border-primary/30 transform rotate-45"></div>
       </div>
     </div>
   );
