@@ -40,12 +40,7 @@ const Navigation = () => {
     >
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <button
-            onClick={() => scrollToSection("hjem")}
-            className="text-xl lg:text-2xl font-bold text-primary hover:text-accent transition-colors"
-          >
-            Benjamin Eng
-          </button>
+          <div className="w-8 h-8"></div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">

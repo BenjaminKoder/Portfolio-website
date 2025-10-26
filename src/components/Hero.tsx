@@ -1,4 +1,5 @@
 import { ArrowDown } from "lucide-react";
+import profileImage from "@/assets/profile.png";
 
 const Hero = () => {
   const scrollToSection = (id: string) => {
@@ -22,6 +23,13 @@ const Hero = () => {
       
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+          <div className="mb-6 flex justify-center">
+            <img 
+              src={profileImage} 
+              alt="Benjamin Eng" 
+              className="w-32 h-32 rounded-full object-cover border-2 border-primary/20 shadow-elegant"
+            />
+          </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6">
             Benjamin Eng
           </h1>
