@@ -17,7 +17,7 @@ const ProjectCard = ({ title, description, url, comingSoon }: ProjectCardProps) 
           {!comingSoon && <ExternalLink className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity" />}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex-grow flex flex-col justify-between">
         <CardDescription className="text-muted-foreground mb-4">
           {description}
         </CardDescription>
@@ -37,15 +37,15 @@ const ProjectCard = ({ title, description, url, comingSoon }: ProjectCardProps) 
 
   if (comingSoon) {
     return (
-      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border">
+      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border h-full flex flex-col">
         {cardContent}
       </Card>
     );
   }
 
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className="block">
-      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border cursor-pointer">
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block h-full">
+      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border cursor-pointer h-full flex flex-col">
         {cardContent}
       </Card>
     </a>
