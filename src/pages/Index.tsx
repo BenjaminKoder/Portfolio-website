@@ -6,6 +6,7 @@ import Skills from "@/components/Skills";
 import CV from "@/components/CV";
 import Contact from "@/components/Contact";
 import ChatWidget from "@/components/ChatWidget";
+import AIAssistantToast from "@/components/AIAssistantToast";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
         <Contact />
       </main>
       <ChatWidget />
+      <AIAssistantToast />
       
       <footer className="bg-secondary/30 border-t border-border py-8">
         <div className="container mx-auto px-4 lg:px-8">
