@@ -26,8 +26,8 @@ const Hero = () => {
             Benjamin Eng
           </h1>
           <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Benjamin Eng er student innen datateknologi ved NTNU og utvikler
-            innen web og AI-integrasjoner.
+            Jeg er student innen datateknologi ved NTNU og utvikler
+            innen web og AI-integrasjoner. Dette er min portefølje-nettside
           </p>
           
           <button
