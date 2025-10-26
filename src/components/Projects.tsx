@@ -50,24 +50,34 @@ const Projects = () => {
           </div>
 
           <div className="animate-fade-in-up">
+            <div className="mb-16">
+              <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-background border-2 border-primary/20 rounded-lg p-8 mb-12">
+                <div className="max-w-3xl mx-auto text-center space-y-4">
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                    Nyeste prosjekter fra universitetet
+                  </h3>
+                  <p className="text-lg text-muted-foreground">
+                    Python- og Java-prosjekter utviklet under studiene ved NTNU
+                  </p>
+                  <a href="https://github.com/BenjaminKoder/Portfolio" target="_blank" rel="noopener noreferrer" className="inline-block">
+                    <Button size="lg" className="gap-3 text-base px-8 py-6 mt-2">
+                      <Github className="h-5 w-5" />
+                      Se prosjekter på GitHub
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div className="mb-12">
               <h3 className="text-xl font-semibold text-muted-foreground mb-6">
-                Noen utvalgte gamle småprosjekter i web (utviklet på videregående)
+                Utvalgte småprosjekter i web (utviklet på videregående)
               </h3>
               <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {earlyProjects.map((project) => (
                   <ProjectCard key={project.title} {...project} />
                 ))}
               </div>
-            </div>
-
-            <div className="text-center pt-8">
-              <a href="https://github.com/BenjaminKoder/Portfolio" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" className="gap-2">
-                  <Github className="h-4 w-4" />
-                  Se Python- og Java-prosjekter på GitHub
-                </Button>
-              </a>
             </div>
           </div>
         </div>
