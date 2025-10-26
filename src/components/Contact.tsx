@@ -52,7 +52,6 @@ const Contact = () => {
           name: data.name,
           email: data.email,
           message: data.message,
-          timestamp: new Date().toISOString(),
         }),
       });
 
