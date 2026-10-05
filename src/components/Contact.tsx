@@ -1,35 +1,25 @@
 import { useState } from "react";
-import { Linkedin, Github, Mail, Copy, ExternalLink, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { profile } from "@/content/profile";
+import SectionHeader from "./SectionHeader";
 
 const contactFormSchema = z.object({
-  name: z.string().trim().min(1, "Navn er påkrevd").max(100, "Navnet må være mindre enn 100 tegn"),
-  email: z.string().trim().email("Ugyldig e-postadresse").max(255, "E-postadressen må være mindre enn 255 tegn"),
-  message: z.string().trim().min(1, "Melding er påkrevd").max(1000, "Meldingen må være mindre enn 1000 tegn"),
+  name: z.string().trim().min(1, "Navn er påkrevd").max(100, "Navnet må være kortere enn 100 tegn"),
+  email: z.string().trim().email("Ugyldig e-postadresse").max(255, "E-postadressen må være kortere enn 255 tegn"),
+  message: z.string().trim().min(1, "Melding er påkrevd").max(1000, "Meldingen må være kortere enn 1000 tegn"),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
+const inputClass =
+  "mt-1.5 w-full rounded-lg border-2 border-foreground bg-card px-3 py-2 text-[15px] outline-none transition-shadow focus:shadow-[3px_3px_0_0_hsl(var(--foreground))]";
+
 const Contact = () => {
   const { toast } = useToast();
-  const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const emailAddress = "bennyeng0612@gmail.com";
 
   const {
     register,
@@ -45,30 +35,18 @@ const Contact = () => {
     try {
       const response = await fetch("https://hook.eu2.make.com/9d4l5c7bbixikqrnc0tteltkriq6ysxb", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          message: data.message,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
+      if (!response.ok) throw new Error("Failed to send message");
 
-      if (response.ok) {
-        toast({
-          title: "Melding sendt!",
-          description: "Takk for din henvendelse. Jeg vil svare så snart som mulig.",
-        });
-        reset();
-      } else {
-        throw new Error("Failed to send message");
-      }
+      toast({ title: "Melding sendt", description: "Takk! Jeg svarer så snart jeg kan." });
+      reset();
     } catch (error) {
       console.error("Error sending message:", error);
       toast({
         title: "Noe gikk galt",
-        description: "Kunne ikke sende meldingen. Vennligst prøv igjen senere.",
+        description: `Meldingen ble ikke sendt. Send gjerne e-post til ${profile.email}.`,
         variant: "destructive",
       });
     } finally {
@@ -76,158 +54,70 @@ const Contact = () => {
     }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(emailAddress);
-    toast({
-      title: "E-postadresse kopiert!",
-      description: "E-postadressen er kopiert til utklippstavlen.",
-    });
+  const copyEmail = () => {
+    navigator.clipboard.writeText(profile.email);
+    toast({ title: "E-postadressen er kopiert" });
   };
 
   return (
-    <section id="kontakt" className="py-20 lg:py-32">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12 lg:mb-16 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-              Kontakt
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              Ta kontakt for samarbeid eller spørsmål
-            </p>
-          </div>
+    <section id="kontakt" className="section">
+      <div className="container-wide">
+        <SectionHeader index="04" title="Kontakt" color="bg-ice" />
 
-          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-            <div className="space-y-6 animate-fade-in">
-              <div className="bg-gradient-card border border-border rounded-lg p-6 hover:shadow-lg transition-all duration-300">
-                <h3 className="text-lg font-semibold text-primary mb-4">
-                  Finn meg her
-                </h3>
-                <div className="space-y-4">
-                  <a
-                    href="https://www.linkedin.com/in/benjamin-eng-5a8385323/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors group"
-                  >
-                    <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
-                      <Linkedin className="h-5 w-5" />
-                    </div>
-                    <span className="font-medium">LinkedIn</span>
-                  </a>
-                  <a
-                    href="https://github.com/BenjaminKoder"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors group"
-                  >
-                    <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
-                      <Github className="h-5 w-5" />
-                    </div>
-                    <span className="font-medium">GitHub</span>
-                  </a>
-                  <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                    <DialogTrigger asChild>
-                      <button className="flex items-center gap-3 text-muted-foreground hover:text-accent transition-colors group w-full">
-                        <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
-                          <Mail className="h-5 w-5" />
-                        </div>
-                        <span className="font-medium">Send e-post</span>
-                      </button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Kontakt meg via e-post</DialogTitle>
-                        <DialogDescription>
-                          Du kan sende meg en e-post direkte eller kopiere adressen.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <div className="space-y-4 py-4">
-                        <div className="flex items-center justify-center gap-2 p-4 bg-muted rounded-lg">
-                          <Mail className="h-4 w-4 text-muted-foreground" />
-                          <span className="font-medium">{emailAddress}</span>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <Button
-                            onClick={() => window.open(`mailto:${emailAddress}`, '_blank')}
-                            className="gap-2"
-                          >
-                            <ExternalLink className="h-4 w-4" />
-                            Åpne e-postklient
-                          </Button>
-                          <Button
-                            variant="outline"
-                            onClick={copyToClipboard}
-                            className="gap-2"
-                          >
-                            <Copy className="h-4 w-4" />
-                            Kopier e-postadresse
-                          </Button>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </div>
-              </div>
+        <div className="grid gap-8 md:grid-cols-[1fr_1.4fr]">
+          <div className="pop space-y-6 bg-periwinkle p-6 sm:p-8">
+            <div>
+              <p className="mb-2 font-mono text-xs font-medium uppercase tracking-wide">E-post</p>
+              <a href={`mailto:${profile.email}`} className="link-arrow break-all">
+                {profile.email}
+              </a>
+              <button onClick={copyEmail} className="ml-3 font-mono text-xs underline underline-offset-2">
+                [kopier]
+              </button>
             </div>
-
-            <div className="animate-fade-in">
-              <div className="bg-gradient-card border border-border rounded-lg p-6 hover:shadow-lg transition-all duration-300">
-                <h3 className="text-lg font-semibold text-primary mb-4">
-                  Send en melding
-                </h3>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                  <div>
-                    <Label htmlFor="name">Navn</Label>
-                    <Input
-                      id="name"
-                      {...register("name")}
-                      placeholder="Ditt navn"
-                      className="mt-1.5"
-                    />
-                    {errors.name && (
-                      <p className="text-sm text-destructive mt-1">{errors.name.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="email">E-post</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      {...register("email")}
-                      placeholder="din@epost.no"
-                      className="mt-1.5"
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
-                    )}
-                  </div>
-                  <div>
-                    <Label htmlFor="message">Melding</Label>
-                    <Textarea
-                      id="message"
-                      {...register("message")}
-                      placeholder="Skriv din melding her..."
-                      className="mt-1.5 min-h-[120px]"
-                    />
-                    {errors.message && (
-                      <p className="text-sm text-destructive mt-1">{errors.message.message}</p>
-                    )}
-                  </div>
-                  <Button type="submit" disabled={isSubmitting} className="w-full gap-2">
-                    {isSubmitting ? (
-                      <>Sender...</>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4" />
-                        Send melding
-                      </>
-                    )}
-                  </Button>
-                </form>
+            <div>
+              <p className="mb-2 font-mono text-xs font-medium uppercase tracking-wide">Profiler</p>
+              <div className="flex flex-col items-start gap-2">
+                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="link-arrow">
+                  LinkedIn ↗
+                </a>
+                <a href={profile.github} target="_blank" rel="noopener noreferrer" className="link-arrow">
+                  GitHub ↗
+                </a>
               </div>
             </div>
           </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="pop space-y-5 p-6 sm:p-8" noValidate>
+            <div>
+              <label htmlFor="name" className="label">
+                Navn
+              </label>
+              <input id="name" {...register("name")} className={inputClass} autoComplete="name" />
+              {errors.name && <p className="mt-1 text-sm text-destructive">{errors.name.message}</p>}
+            </div>
+            <div>
+              <label htmlFor="email" className="label">
+                E-post
+              </label>
+              <input id="email" type="email" {...register("email")} className={inputClass} autoComplete="email" />
+              {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
+            </div>
+            <div>
+              <label htmlFor="message" className="label">
+                Melding
+              </label>
+              <textarea id="message" {...register("message")} className={`${inputClass} min-h-[140px]`} />
+              {errors.message && <p className="mt-1 text-sm text-destructive">{errors.message.message}</p>}
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn bg-blue text-white disabled:opacity-50"
+            >
+              {isSubmitting ? "Sender…" : "Send melding →"}
+            </button>
+          </form>
         </div>
       </div>
     </section>

@@ -95,7 +95,8 @@ const ChatWidget = () => {
       {/* Chat Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-accent hover:bg-accent/90 text-accent-foreground z-50"
+        aria-label={isOpen ? "Lukk AI-assistenten" : "Åpne AI-assistenten"}
+        className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full border-2 border-foreground bg-blue text-white shadow-[3px_3px_0_0_hsl(var(--foreground))] hover:bg-periwinkle hover:text-foreground"
         size="icon"
       >
         {isOpen ? (
@@ -107,11 +108,11 @@ const ChatWidget = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] h-[500px] bg-background border border-border rounded-lg shadow-xl z-50 flex flex-col animate-scale-in">
+        <div className="fixed bottom-20 right-5 z-50 flex h-[480px] max-h-[calc(100vh-7rem)] w-96 max-w-[calc(100vw-2.5rem)] flex-col rounded-xl border-2 border-foreground bg-card shadow-[5px_5px_0_0_hsl(var(--foreground))] overflow-hidden animate-scale-in">
           {/* Header */}
-          <div className="p-4 border-b border-border bg-gradient-hero text-primary-foreground rounded-t-lg">
-            <h3 className="font-semibold">Spør Benjamin</h3>
-            <p className="text-sm opacity-90">AI-assistent</p>
+          <div className="border-b-2 border-foreground bg-periwinkle p-4">
+            <h3 className="font-display text-lg font-bold">Spør om Benjamin</h3>
+            <p className="mt-1 font-mono text-xs">AI-assistent</p>
           </div>
 
           {/* Messages */}
@@ -124,10 +125,10 @@ const ChatWidget = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
+                  className={`max-w-[85%] rounded-lg border-[1.5px] border-foreground px-3 py-2 ${
                     message.role === "user"
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-secondary text-foreground"
+                      ? "bg-periwinkle"
+                      : "bg-card"
                   }`}
                 >
                   <p className="text-sm">{message.content}</p>
@@ -136,8 +137,8 @@ const ChatWidget = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-secondary text-foreground rounded-lg p-3">
-                  <p className="text-sm">Skriver...</p>
+                <div className="rounded-lg border-[1.5px] border-foreground px-3 py-2">
+                  <p className="font-mono text-sm">skriver…</p>
                 </div>
               </div>
             )}
@@ -145,20 +146,20 @@ const ChatWidget = () => {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-border">
+          <form onSubmit={handleSubmit} className="border-t-2 border-foreground p-4">
             <div className="flex gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Skriv ditt spørsmål..."
                 disabled={isLoading}
-                className="flex-1"
+                className="flex-1 rounded-lg border-2 border-foreground"
               />
               <Button
                 type="submit"
                 disabled={isLoading || !input.trim()}
                 size="icon"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                className="rounded-lg border-2 border-foreground bg-blue text-white hover:bg-periwinkle hover:text-foreground"
               >
                 <Send className="h-4 w-4" />
               </Button>

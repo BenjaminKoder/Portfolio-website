@@ -1,54 +1,59 @@
-import { ExternalLink } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Project } from "@/content/projects";
+import { bgClass } from "@/lib/palette";
 
 interface ProjectCardProps {
-  title: string;
-  description: string;
-  url: string;
-  comingSoon?: boolean;
+  project: Project;
 }
 
-const ProjectCard = ({ title, description, url, comingSoon }: ProjectCardProps) => {
-  const cardContent = (
-    <>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between text-primary group-hover:text-accent transition-colors">
-          <span>{title}</span>
-          {!comingSoon && <ExternalLink className="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity" />}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-grow flex flex-col justify-between">
-        <CardDescription className="text-muted-foreground mb-4">
-          {description}
-        </CardDescription>
-        {comingSoon ? (
-          <span className="text-muted-foreground text-sm font-medium inline-flex items-center gap-1">
-            Kommer snart
-          </span>
-        ) : (
-          <span className="text-accent text-sm font-medium inline-flex items-center gap-1">
-            Besøk prosjekt
-            <ExternalLink className="h-4 w-4" />
-          </span>
-        )}
-      </CardContent>
-    </>
-  );
-
-  if (comingSoon) {
-    return (
-      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border h-full flex flex-col">
-        {cardContent}
-      </Card>
-    );
-  }
-
+// Ett prosjektkort. Får et prosjekt-objekt fra projects.ts og viser bilde, én setning, teknologier og lenker.
+const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className="block h-full">
-      <Card className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-gradient-card border-border cursor-pointer h-full flex flex-col">
-        {cardContent}
-      </Card>
-    </a>
+    <article id={project.slug} className="pop pop-hover group flex h-full flex-col overflow-hidden">
+      {/* Bildet står på en farget flate, som et nettleservindu */}
+      <div className={`relative border-b-2 border-foreground p-4 pb-0 ${bgClass[project.color]}`}>
+        <span className="tag absolute right-3 top-3 z-10 rotate-3">{project.year}</span>
+        <div className="aspect-[16/10] overflow-hidden rounded-t-lg border-2 border-b-0 border-foreground bg-card">
+          {project.image ? (
+            <img
+              src={project.image}
+              alt={`Skjermbilde av ${project.title}`}
+              loading="lazy"
+              className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${
+                project.imageFit === "contain" ? "bg-[#c5e3fb] object-contain" : "object-cover object-top"
+              }`}
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center p-6">
+              <span className="text-center font-display text-3xl font-extrabold leading-tight opacity-90">
+                {project.tech[0]}
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-display text-2xl font-bold leading-tight tracking-tight">{project.title}</h3>
+        <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{project.summary}</p>
+
+        <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Teknologier">
+          {project.tech.map((tech) => (
+            <li key={tech} className="tag">
+              {tech}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-5">
+          {project.links.map((link) => (
+            <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="link-arrow">
+              {link.label} ↗
+            </a>
+          ))}
+          {project.codeNote && <span className="font-mono text-xs text-muted-foreground">{project.codeNote}</span>}
+        </div>
+      </div>
+    </article>
   );
 };
 

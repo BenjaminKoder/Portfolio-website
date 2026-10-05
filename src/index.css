@@ -2,112 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Designsystemet. Farger og fonter defineres bare her, så hele uttrykket kan byttes
+   ved å endre disse variablene (og fontene i index.html). Alle farger er HSL. */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 215 25% 15%;
+    --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+    --font-display: "Bricolage Grotesque", "Geist", ui-sans-serif, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    --background: 40 40% 97%;
+    --foreground: 234 45% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+    --card-foreground: 234 45% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+    --popover-foreground: 234 45% 12%;
 
-    --primary: 215 25% 27%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 231 100% 56%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 15% 95%;
-    --secondary-foreground: 215 25% 27%;
+    --secondary: 228 100% 95%;
+    --secondary-foreground: 234 45% 12%;
 
-    --muted: 215 15% 95%;
-    --muted-foreground: 215 15% 45%;
+    --muted: 228 60% 94%;
+    --muted-foreground: 234 15% 38%;
 
-    --accent: 195 65% 48%;
+    --accent: 231 100% 56%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 215 20% 90%;
-    --input: 215 20% 90%;
-    --ring: 195 65% 48%;
+    --border: 234 45% 12%;
+    --input: 234 45% 12%;
+    --ring: 231 100% 56%;
 
     --radius: 0.75rem;
-    
-    /* Custom design tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(215 25% 27%) 0%, hsl(195 65% 48%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(215 15% 98%) 100%);
-    --gradient-section: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 40% 96%) 50%, hsl(195 65% 95%) 100%);
-    --gradient-featured: linear-gradient(135deg, hsl(195 65% 94%) 0%, hsl(210 50% 96%) 50%, hsl(0 0% 100%) 100%);
-    --shadow-sm: 0 1px 2px 0 hsl(215 25% 27% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(215 25% 27% / 0.1), 0 2px 4px -1px hsl(215 25% 27% / 0.06);
-    --shadow-lg: 0 10px 15px -3px hsl(215 25% 27% / 0.1), 0 4px 6px -2px hsl(215 25% 27% / 0.05);
-    --shadow-premium: 0 20px 40px -10px hsl(195 65% 48% / 0.2), 0 0 80px -20px hsl(195 65% 48% / 0.15);
-    --glow-accent: 0 0 30px hsl(195 65% 48% / 0.3);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 215 25% 12%;
-    --foreground: 0 0% 98%;
-
-    --card: 215 25% 15%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 215 25% 15%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 215 25% 27%;
-
-    --secondary: 215 25% 20%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 215 25% 20%;
-    --muted-foreground: 215 15% 65%;
-
-    --accent: 195 65% 48%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 215 25% 20%;
-    --input: 215 25% 20%;
-    --ring: 195 65% 48%;
-    
-    --gradient-hero: linear-gradient(135deg, hsl(215 25% 15%) 0%, hsl(195 65% 35%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(215 25% 15%) 0%, hsl(215 25% 18%) 100%);
-    --gradient-section: linear-gradient(180deg, hsl(215 25% 12%) 0%, hsl(210 40% 14%) 50%, hsl(195 65% 16%) 100%);
-    --gradient-featured: linear-gradient(135deg, hsl(195 65% 16%) 0%, hsl(210 50% 14%) 50%, hsl(215 25% 12%) 100%);
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Fargepalett: én sterk blåfarge og tre lyse blånyanser. */
+    --blue: 231 100% 56%;
+    --periwinkle: 229 100% 89%;
+    --lavender: 246 88% 89%;
+    --ice: 228 100% 95%;
   }
 }
 
@@ -116,7 +54,95 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+
+  ::selection {
+    background: hsl(var(--periwinkle));
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer components {
+  .label {
+    @apply font-mono text-xs uppercase tracking-[0.08em] text-muted-foreground;
+  }
+
+  .section {
+    @apply py-20 lg:py-28;
+  }
+
+  .container-wide {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+
+  /* Kort med tykk kant og hard skygge som løfter seg ved hover */
+  .pop {
+    @apply rounded-xl border-2 border-foreground bg-card transition-[transform,box-shadow] duration-200;
+    box-shadow: 5px 5px 0 0 hsl(var(--foreground));
+  }
+  .pop-hover:hover,
+  .pop-hover:focus-within {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 0 hsl(var(--foreground));
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-full border-[1.5px] border-foreground bg-card px-2.5 py-0.5 font-mono text-[11px] font-medium text-foreground;
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full border-2 border-foreground px-4 py-2 font-mono text-sm font-medium transition-[transform,box-shadow] duration-150;
+    box-shadow: 3px 3px 0 0 hsl(var(--foreground));
+  }
+  .btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 0 hsl(var(--foreground));
+  }
+  .btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 0 hsl(var(--foreground));
+  }
+
+  .link-arrow {
+    @apply inline-flex items-center gap-1 font-mono text-sm font-medium underline decoration-2 underline-offset-4 transition-colors hover:text-accent;
+  }
+
+  /* Bakgrunnsfargene fra paletten, brukt via data i content-filene */
+  .bg-blue { background-color: hsl(var(--blue)); }
+  .bg-periwinkle { background-color: hsl(var(--periwinkle)); }
+  .bg-lavender { background-color: hsl(var(--lavender)); }
+  .bg-ice { background-color: hsl(var(--ice)); }
+  .text-blue { color: hsl(var(--blue)); }
+  .text-periwinkle { color: hsl(var(--periwinkle)); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

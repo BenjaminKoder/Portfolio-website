@@ -1,67 +1,84 @@
-import { Code2, Globe, Cpu, Wrench } from "lucide-react";
+import { useState } from "react";
+import { skillGroups } from "@/content/skills";
+import { projects } from "@/content/projects";
+import SectionHeader from "./SectionHeader";
 
 const Skills = () => {
-  const skillCategories = [
-    {
-      icon: Code2,
-      title: "Programmering",
-      skills: ["Python", "Java", "JavaScript", "HTML", "CSS"],
-    },
-    {
-      icon: Cpu,
-      title: "Teknologi",
-      skills: ["Supabase", "Make.com", "OpenAI API"],
-    },
-    {
-      icon: Wrench,
-      title: "Verktøy",
-      skills: ["Git", "GitHub", "Lovable"],
-    },
-  ];
+  // Hvilken ferdighet som er aktiv (hover, fokus eller klikk). null = ingen.
+  const [active, setActive] = useState<string | null>(null);
+  // Ferdigheter langt til høyre åpner boksen mot venstre, så den ikke går utenfor skjermen.
+  const [alignRight, setAlignRight] = useState(false);
+
+  const open = (name: string, element: HTMLElement) => {
+    setAlignRight(element.getBoundingClientRect().left > window.innerWidth / 2);
+    setActive(name);
+  };
 
   return (
-    <section id="kompetanse" className="py-20 lg:py-32">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12 lg:mb-16 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-              Kompetanse
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Teknisk kompetanse innen utvikling, systemdesign og moderne verktøy.
-            </p>
-          </div>
+    <section id="kompetanse" className="section">
+      <div className="container-wide">
+        <SectionHeader index="02" title="Kompetanse" color="bg-periwinkle" />
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12 animate-fade-in-up">
-            {skillCategories.map((category, index) => {
-              const Icon = category.icon;
-              return (
-                <div
-                  key={index}
-                  className="bg-gradient-card border border-border rounded-lg p-6 lg:p-8 hover:shadow-lg transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-accent/10 rounded-lg">
-                      <Icon className="h-6 w-6 text-accent" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-primary">
-                      {category.title}
-                    </h3>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {category.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1.5 bg-secondary text-foreground rounded-full text-sm font-medium"
+        <div className="grid gap-8 lg:grid-cols-2">
+          {skillGroups.map((group, g) => (
+            <div key={group.title} className={`pop p-6 sm:p-8 ${g === 0 ? "bg-ice" : "bg-lavender"}`}>
+              <h3 className="font-display text-2xl font-bold">{group.title}</h3>
+              <ul className="mt-5 flex flex-wrap gap-2.5">
+                {group.skills.map((skill) => {
+                  // Prosjektene som bruker denne ferdigheten, regnet ut fra projects.ts
+                  const used = projects.filter((p) => p.tech.includes(skill));
+                  const isActive = active === skill;
+
+                  return (
+                    <li
+                      key={skill}
+                      className="relative"
+                      onMouseEnter={(e) => open(skill, e.currentTarget)}
+                      onMouseLeave={() => setActive(null)}
+                    >
+                      <button
+                        onClick={(e) => open(skill, e.currentTarget)}
+                        onFocus={(e) => open(skill, e.currentTarget)}
+                        onBlur={() => setActive(null)}
+                        aria-expanded={used.length > 0 ? isActive : undefined}
+                        className={`rounded-full border-2 border-foreground px-4 py-1.5 font-mono text-sm font-medium transition-transform ${
+                          isActive ? "-translate-y-0.5 bg-foreground text-background" : "bg-card"
+                        }`}
                       >
                         {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                      </button>
+
+                      {isActive && used.length > 0 && (
+                        <div className={`absolute top-full z-20 pt-2 ${alignRight ? "right-0" : "left-0"}`}>
+                          <ul className="pop w-64 max-w-[calc(100vw-2rem)] p-2">
+                            {used.map((project, i) => (
+                              <li
+                                key={project.slug}
+                                className="animate-float-out opacity-0"
+                                style={{ animationDelay: `${i * 50}ms` }}
+                              >
+                                <a
+                                  // Skjulte prosjekter har ikke noe kort å hoppe til, så de lenker rett til koden
+                                  href={project.hidden ? project.links[0]?.href : `#${project.slug}`}
+                                  target={project.hidden ? "_blank" : undefined}
+                                  rel="noopener noreferrer"
+                                  onMouseDown={(e) => e.preventDefault()}
+                                  className="flex items-baseline justify-between gap-3 rounded-md px-2 py-1.5 text-sm hover:bg-periwinkle"
+                                >
+                                  <span>{project.title}</span>
+                                  <span className="font-mono text-xs text-muted-foreground">{project.year}</span>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </section>
