@@ -45,7 +45,7 @@ const Projects = () => {
                   className="h-10 w-16 shrink-0 rounded border-[1.5px] border-foreground object-cover object-top md:hidden"
                 />
               )}
-              <span className="font-mono text-xs text-muted-foreground">{item.year}</span>
+              <span className="w-[4.5rem] shrink-0 font-mono text-xs text-muted-foreground">{item.year}</span>
               <span className="flex-1">
                 <span className="font-medium">{item.title}</span>
                 <span className="hidden text-muted-foreground sm:inline"> {item.description}</span>
