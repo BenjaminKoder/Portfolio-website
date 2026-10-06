@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   role: "user" | "assistant";
@@ -10,7 +9,6 @@ interface Message {
 }
 
 const ChatWidget = () => {
-  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -40,49 +38,25 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      const webhookUrl = "https://hook.eu2.make.com/h8ikhnbpul7vf54itmycfn6ai2b8kuv2";
-      
-      const response = await fetch(webhookUrl, {
+      // Hele samtalen sendes, så assistenten husker hva som er sagt. Serveren kutter den ned.
+      const history = [...messages, { role: "user" as const, content: userMessage }];
+      const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: userMessage,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
       });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error ?? "Failed to get response");
 
-      if (response.ok) {
-        const responseText = await response.text();
-        
-        // Try to parse as JSON first, otherwise use plain text
-        let aiResponse;
-        try {
-          const data = JSON.parse(responseText);
-          aiResponse = data.response || responseText;
-        } catch {
-          // If not JSON, use the plain text response
-          aiResponse = responseText;
-        }
-        
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: aiResponse || "Beklager, jeg kunne ikke behandle det spørsmålet." },
-        ]);
-      } else {
-        throw new Error("Failed to get response");
-      }
+      setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
     } catch (error) {
-      toast({
-        title: "Noe gikk galt",
-        description: "Kunne ikke få svar fra AI-assistenten. Prøv igjen senere.",
-        variant: "destructive",
-      });
+      // Serveren sender en forklarende feilmelding, f.eks. ved for mange spørsmål
+      const reason = error instanceof Error && error.message !== "Failed to get response" ? error.message : null;
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Beklager, jeg opplever tekniske problemer. Vennligst prøv igjen senere.",
+          content: reason ?? "Assistenten svarer ikke akkurat nå. Send gjerne en e-post i stedet.",
         },
       ]);
     } finally {
@@ -131,7 +105,7 @@ const ChatWidget = () => {
                       : "bg-card"
                   }`}
                 >
-                  <p className="text-sm">{message.content}</p>
+                  <p className="whitespace-pre-line text-sm">{message.content}</p>
                 </div>
               </div>
             ))}

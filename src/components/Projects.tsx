@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { projects, archive, type ArchiveItem } from "@/content/projects";
+import { projectImage } from "@/lib/projectImages";
 import ProjectCard from "./ProjectCard";
 import SectionHeader from "./SectionHeader";
 
@@ -40,7 +41,7 @@ const Projects = () => {
               >
                 {item.image && (
                   <img
-                    src={item.image}
+                    src={projectImage(item.image)}
                     alt=""
                     loading="lazy"
                     className="h-10 w-16 shrink-0 rounded border-[1.5px] border-foreground object-cover object-top md:hidden"
@@ -61,7 +62,7 @@ const Projects = () => {
       {/* Forhåndsvisning som følger musen, bare på store skjermer */}
       {hovered?.image && (
         <img
-          src={hovered.image}
+          src={projectImage(hovered.image)}
           alt=""
           className="pointer-events-none fixed z-50 hidden w-72 -rotate-2 rounded-lg border-2 border-foreground shadow-[6px_6px_0_0_hsl(var(--foreground))] md:block"
           style={{ left: mouse.x + 24, top: mouse.y - 90 }}

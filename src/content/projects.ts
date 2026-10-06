@@ -1,21 +1,6 @@
 // Alt innhold om prosjektene ligger her, adskilt fra komponentene som viser det.
 // Teknologinavnene i `tech` må stå skrevet likt som i skills.ts, ellers kobles de ikke sammen.
-
-import nyhetsbriefing from "@/assets/projects/nyhetsbriefing.jpg";
-import campuswear from "@/assets/projects/campuswear.jpg";
-import houstonVenues from "@/assets/projects/houston-venues.jpg";
-import digisaga from "@/assets/projects/digisaga.jpg";
-import shakeThatJazz from "@/assets/projects/shake-that-jazz.jpg";
-import javafxSpill from "@/assets/projects/javafx-spill.jpg";
-import consulteng from "@/assets/projects/consulteng.jpg";
-import pilsulator from "@/assets/projects/pilsulator.jpg";
-import canvasSpill from "@/assets/projects/canvas-spill.jpg";
-import tallsystemer from "@/assets/projects/tallsystemer.jpg";
-import mario from "@/assets/projects/mario.jpg";
-import montyHall from "@/assets/projects/monty-hall.jpg";
-import spinnerDb from "@/assets/projects/spinner-db.jpg";
-import spinnerLs from "@/assets/projects/spinner-ls.jpg";
-import mobil from "@/assets/projects/mobil.jpg";
+// Filen er ren data uten importer, så AI-assistenten på serveren kan lese den samme informasjonen.
 
 export type PaletteColor = "blue" | "periwinkle" | "lavender" | "ice";
 
@@ -34,6 +19,7 @@ export interface Project {
   links: ProjectLink[];
   /** Vises når koden ikke er offentlig. */
   codeNote?: string;
+  /** Filnavn i src/assets/projects. */
   image?: string;
   /** "contain" for høye skjermbilder som ikke skal beskjæres. */
   imageFit?: "cover" | "contain";
@@ -46,15 +32,18 @@ const GITHUB_PAGES = "https://benjaminkoder.github.io";
 
 export const projects: Project[] = [
   {
-    slug: "nyhetsbriefing",
-    title: "Nyhetsbriefing for Innovasjon Norge",
+    slug: "peer",
+    title: "Peer",
     year: "2026",
-    summary: "AI-agent som overvåker nyheter og sender daglige briefinger til Innovasjon Norges kontor i Houston.",
-    tech: ["TypeScript", "React", "Supabase/Postgres", "Resend", "LLM-API-er", "Lovable"],
-    links: [],
-    codeNote: "Privat kode",
-    image: nyhetsbriefing,
-    color: "periwinkle",
+    summary: "Timebestilling og CRM for helseklinikker, med oversikt over behandlere, pasienter og avtaler, og SMS-varsler.",
+    tech: ["TypeScript", "React", "Twilio", "Lovable"],
+    links: [
+      { label: "Booking", href: "https://peer-booking.lovable.app" },
+      { label: "Peer CRM", href: "https://peer-crm.lovable.app" },
+    ],
+    codeNote: "Sammen med Emil Skotner",
+    image: "peer.jpg",
+    color: "blue",
   },
   {
     slug: "campuswear",
@@ -64,28 +53,40 @@ export const projects: Project[] = [
     tech: ["TypeScript", "React", "Supabase/Postgres", "Lovable"],
     links: [{ label: "Åpne", href: "https://everyday-hello-bot.lovable.app" }],
     codeNote: "Privat kode",
-    image: campuswear,
+    image: "campuswear.jpg",
     color: "lavender",
   },
   {
-    slug: "consulteng",
-    title: "ConsultEng",
-    year: "2024–",
-    summary: "Webstudio for nyetablerte bedrifter, som jeg driver sammen med en medstudent.",
-    tech: ["TypeScript", "React", "Supabase/Postgres", "Make.com", "LLM-API-er", "Lovable"],
-    links: [{ label: "consulteng.no", href: "https://consulteng.no" }],
-    image: consulteng,
+    slug: "nyhetsbriefing",
+    title: "Nyhetsbriefing for Innovasjon Norge",
+    year: "2026",
+    summary: "AI-agent som overvåker nyheter og sender daglige briefinger til Innovasjon Norges kontor i Houston.",
+    tech: ["TypeScript", "React", "Supabase/Postgres", "Resend", "LLM-API-er", "Lovable"],
+    links: [],
+    codeNote: "Privat kode",
+    image: "nyhetsbriefing.jpg",
     color: "periwinkle",
+  },
+  {
+    slug: "anbudsportal",
+    title: "Anbudsportal",
+    year: "2025",
+    summary: "Kobler privatpersoner med håndverkere: beskriv jobben og få tilbud fra leverandører.",
+    tech: ["TypeScript", "React", "Lovable"],
+    links: [{ label: "Åpne", href: "https://anbudsportal.lovable.app" }],
+    codeNote: "Sammen med Emil Skotner",
+    image: "anbudsportal.jpg",
+    color: "ice",
   },
   {
     slug: "digisaga",
     title: "DigiSaga",
     year: "2024–",
-    summary: "Studentdrevet satsing som lager nettsider og AI-automatisering for norske bedrifter.",
+    summary: "Nettsider og AI-automatisering for norske bedrifter, som jeg driver sammen med en medstudent.",
     tech: ["TypeScript", "React", "Make.com", "LLM-API-er", "Lovable"],
     links: [{ label: "digisaga.no", href: "https://digisaga.no" }],
-    image: digisaga,
-    color: "ice",
+    image: "digisaga.jpg",
+    color: "periwinkle",
   },
   {
     slug: "houston-venues",
@@ -94,7 +95,7 @@ export const projects: Project[] = [
     summary: "Kart og database over lokaler og leverandører til arrangementer for Innovasjon Norge i Houston.",
     tech: ["TypeScript", "React", "Supabase/Postgres", "LLM-API-er", "Lovable"],
     links: [{ label: "Åpne", href: "https://houston-venues.lovable.app" }],
-    image: houstonVenues,
+    image: "houston-venues.jpg",
     color: "lavender",
   },
   {
@@ -104,7 +105,7 @@ export const projects: Project[] = [
     summary: "Promillekalkulator som regner ut omtrentlig promille med Widmarks formel.",
     tech: ["JavaScript", "HTML og CSS"],
     links: [{ label: "Prøv", href: `${GITHUB_PAGES}/` }],
-    image: pilsulator,
+    image: "pilsulator.jpg",
     color: "blue",
   },
   {
@@ -114,9 +115,9 @@ export const projects: Project[] = [
     summary: "Doodle Jump-inspirert spill med innlogging, lagring og JUnit-tester, laget i TDT4100.",
     tech: ["Java", "JavaFX", "JUnit"],
     links: [
-      { label: "Kode", href: "https://github.com/BenjaminKoder/Portfolio/tree/main/Java%20prosjekter/OOPprosjekt" },
+      { label: "Kode", href: "https://github.com/BenjaminKoder/Portfolio/tree/main/prosjekter/plattformspill-javafx" },
     ],
-    image: javafxSpill,
+    image: "javafx-spill.jpg",
     imageFit: "contain",
     color: "ice",
   },
@@ -127,19 +128,19 @@ export const projects: Project[] = [
     summary: "Plattformspill på HTML5 Canvas med 15 baner og ledertavle i Firebase.",
     tech: ["JavaScript", "HTML og CSS", "Firebase"],
     links: [{ label: "Spill", href: `${GITHUB_PAGES}/Spillsider/Canvasgamefreestyle/index.html` }],
-    image: canvasSpill,
+    image: "canvas-spill.jpg",
     color: "blue",
   },
   {
     slug: "shake-that-jazz",
     title: "Shake That Jazz",
     year: "2023",
-    summary: "Pygame-spill med egne sprites, musikk og en butikk for oppgraderinger.",
+    summary: "Pygame-spill med egne sprites og en butikk for oppgraderinger.",
     tech: ["Python", "Pygame"],
     links: [
-      { label: "Kode", href: "https://github.com/BenjaminKoder/Portfolio/tree/main/Python%20prosjekter/Prosjekt" },
+      { label: "Kode", href: "https://github.com/BenjaminKoder/Portfolio/tree/main/prosjekter/shake-that-jazz" },
     ],
-    image: shakeThatJazz,
+    image: "shake-that-jazz.jpg",
     color: "periwinkle",
   },
   {
@@ -161,6 +162,7 @@ export interface ArchiveItem {
   href: string;
   /** "web" kan kjøres i nettleseren, "kode" lenker til kildekoden. */
   kind: "web" | "kode";
+  /** Filnavn i src/assets/projects. */
   image?: string;
 }
 
@@ -171,7 +173,7 @@ export const archive: ArchiveItem[] = [
     description: "Nettside om tallsystemer, bits og bytes",
     href: `${GITHUB_PAGES}/StorsteProsjekter/Tallsystemer/index.html`,
     kind: "web",
-    image: tallsystemer,
+    image: "tallsystemer.jpg",
   },
   {
     title: "Mario",
@@ -179,7 +181,7 @@ export const archive: ArchiveItem[] = [
     description: "Plattformspill i nettleseren",
     href: `${GITHUB_PAGES}/StorsteProsjekter/shyguy/index.html`,
     kind: "web",
-    image: mario,
+    image: "mario.jpg",
   },
   {
     title: "Lykkehjul med database",
@@ -187,7 +189,7 @@ export const archive: ArchiveItem[] = [
     description: "Spinner med innlogging og ledertavle",
     href: `${GITHUB_PAGES}/Spillsider/SpinnerTob/saannBenjiVil/index.html`,
     kind: "web",
-    image: spinnerDb,
+    image: "spinner-db.jpg",
   },
   {
     title: "Lykkehjul med localStorage",
@@ -195,7 +197,7 @@ export const archive: ArchiveItem[] = [
     description: "Spinner som lagrer i nettleseren",
     href: `${GITHUB_PAGES}/Spillsider/SpinnerTycoon/Spinner.html`,
     kind: "web",
-    image: spinnerLs,
+    image: "spinner-ls.jpg",
   },
   {
     title: "Monty Hall",
@@ -203,7 +205,7 @@ export const archive: ArchiveItem[] = [
     description: "Simulering av Monty Hall-problemet",
     href: `${GITHUB_PAGES}/StorsteProsjekter/4B%20Hendelser/4B%20timearbeid/MontyHall.html`,
     kind: "web",
-    image: montyHall,
+    image: "monty-hall.jpg",
   },
   {
     title: "Mobil-demo",
@@ -211,20 +213,22 @@ export const archive: ArchiveItem[] = [
     description: "Responsiv nettside",
     href: `${GITHUB_PAGES}/StorsteProsjekter/Mobil.html`,
     kind: "web",
-    image: mobil,
+    image: "mobil.jpg",
   },
   {
     title: "Sirkelspillet",
-    year: "2023",
+    year: "2022",
     description: "Skytespill i Pygame",
-    href: "https://github.com/BenjaminKoder/Portfolio/tree/main/Python%20prosjekter/forstePygame",
+    href: "https://github.com/BenjaminKoder/Portfolio/tree/main/tidligere-prosjekter/forste-pygame",
     kind: "kode",
+    image: "sirkelspillet.jpg",
   },
   {
     title: "Klassequiz",
-    year: "2023",
+    year: "2022",
     description: "Quiz i Pygame",
-    href: "https://github.com/BenjaminKoder/Portfolio/tree/main/Python%20prosjekter/forstePygame",
+    href: "https://github.com/BenjaminKoder/Portfolio/tree/main/tidligere-prosjekter/forste-pygame",
     kind: "kode",
+    image: "klassequiz.jpg",
   },
 ];

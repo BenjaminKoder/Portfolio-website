@@ -1,5 +1,6 @@
 import type { Project } from "@/content/projects";
 import { bgClass } from "@/lib/palette";
+import { projectImage } from "@/lib/projectImages";
 
 interface ProjectCardProps {
   project: Project;
@@ -11,11 +12,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     <article id={project.slug} className="pop pop-hover group flex h-full flex-col overflow-hidden">
       {/* Bildet står på en farget flate, som et nettleservindu */}
       <div className={`relative border-b-2 border-foreground p-4 pb-0 ${bgClass[project.color]}`}>
-        <span className="tag absolute right-3 top-3 z-10 rotate-3">{project.year}</span>
+        {project.year && <span className="tag absolute right-3 top-3 z-10 rotate-3">{project.year}</span>}
         <div className="aspect-[16/10] overflow-hidden rounded-t-lg border-2 border-b-0 border-foreground bg-card">
           {project.image ? (
             <img
-              src={project.image}
+              src={projectImage(project.image)}
               alt={`Skjermbilde av ${project.title}`}
               loading="lazy"
               className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${

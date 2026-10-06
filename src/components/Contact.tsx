@@ -10,6 +10,8 @@ const contactFormSchema = z.object({
   name: z.string().trim().min(1, "Navn er påkrevd").max(100, "Navnet må være kortere enn 100 tegn"),
   email: z.string().trim().email("Ugyldig e-postadresse").max(255, "E-postadressen må være kortere enn 255 tegn"),
   message: z.string().trim().min(1, "Melding er påkrevd").max(1000, "Meldingen må være kortere enn 1000 tegn"),
+  // Skjult felt mot spam. Mennesker ser det ikke, roboter fyller det ut.
+  website: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -33,7 +35,7 @@ const Contact = () => {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("https://hook.eu2.make.com/9d4l5c7bbixikqrnc0tteltkriq6ysxb", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -110,6 +112,14 @@ const Contact = () => {
               <textarea id="message" {...register("message")} className={`${inputClass} min-h-[140px]`} />
               {errors.message && <p className="mt-1 text-sm text-destructive">{errors.message.message}</p>}
             </div>
+            <input
+              {...register("website")}
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            />
             <button
               type="submit"
               disabled={isSubmitting}
