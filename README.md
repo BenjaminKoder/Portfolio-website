@@ -1,4 +1,4 @@
-# Portfolio-website
+# portfolio
 
 Porteføljesiden min, med prosjekter, kompetanse, CV og en AI-assistent som svarer på spørsmål om meg.
 

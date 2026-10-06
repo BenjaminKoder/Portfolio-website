@@ -22,7 +22,7 @@ const Index = () => {
       <footer className="border-t-2 border-foreground bg-foreground py-8 text-background">
         <div className="container-wide flex flex-wrap justify-between gap-2 font-mono text-xs">
           <span>© {new Date().getFullYear()} Benjamin Eng</span>
-          <a href="https://github.com/BenjaminKoder/Portfolio-website" className="underline underline-offset-4 hover:text-periwinkle">
+          <a href="https://github.com/BenjaminKoder/portfolio" className="underline underline-offset-4 hover:text-periwinkle">
             Kildekoden til siden ↗
           </a>
         </div>
