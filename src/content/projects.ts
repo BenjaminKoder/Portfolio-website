@@ -114,6 +114,7 @@ export const projects: Project[] = [
       { label: "Prøv", href: `${GITHUB_PAGES}/Spillsider/PilsKalkulator/index.html` },
       { label: "Kode", href: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/Spillsider/PilsKalkulator" },
     ],
+    codeNote: "Illustrasjoner av Felix Johanssen",
     image: "pilsulator.jpg",
     color: "blue",
   },
@@ -182,15 +183,6 @@ export interface ArchiveItem {
 
 export const archive: ArchiveItem[] = [
   {
-    title: "Benjamins prosjekter",
-    year: "2021–2022",
-    description: "De første prosjektene jeg lagde, som viser utviklingen min",
-    href: `${GITHUB_PAGES}/StorsteProsjekter/StorsteProsjekter.html`,
-    kind: "web",
-    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter",
-    image: "benjamins-prosjekter.jpg",
-  },
-  {
     title: "Tallsystemer",
     year: "2022",
     description: "Nettside om tallsystemer, bits og bytes",
@@ -198,6 +190,15 @@ export const archive: ArchiveItem[] = [
     kind: "web",
     code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter/Tallsystemer",
     image: "tallsystemer.jpg",
+  },
+  {
+    title: "Benjamins prosjekter",
+    year: "2021–2022",
+    description: "De første prosjektene jeg lagde, som viser utviklingen min",
+    href: `${GITHUB_PAGES}/StorsteProsjekter/StorsteProsjekter.html`,
+    kind: "web",
+    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter",
+    image: "benjamins-prosjekter.jpg",
   },
   {
     title: "Lykkehjul med database",
