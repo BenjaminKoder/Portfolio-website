@@ -3,7 +3,6 @@ import fs from "fs";
 import { parseEnv } from "util";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 
 // Kjører funksjonene i api/ lokalt under `npm run dev`, slik Vercel gjør i produksjon.
 // Hver fil eksporterer POST(request: Request): Promise<Response>.
@@ -39,7 +38,7 @@ const apiDevServer = (): Plugin => ({
 });
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(() => {
   // Gjør nøklene i .env og .env.local tilgjengelige for api/-funksjonene lokalt.
   // Filene leses direkte og overskriver gamle verdier, så endringer slår inn når serveren restarter.
   for (const file of [".env", ".env.local"]) {
@@ -51,7 +50,7 @@ export default defineConfig(({ mode }) => {
       host: "::",
       port: 8080,
     },
-    plugins: [react(), apiDevServer(), mode === "development" && componentTagger()].filter(Boolean),
+    plugins: [react(), apiDevServer()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),

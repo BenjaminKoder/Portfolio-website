@@ -17,8 +17,6 @@ Porteføljesiden min, med prosjekter, kompetanse, CV og en AI-assistent som svar
 | AI-assistent | Claude Sonnet 5.5 via Anthropic SDK |
 | E-post | Resend |
 
-Siden ble først laget i Lovable, og er deretter skrevet om lokalt.
-
 ## Struktur
 
 ```
