@@ -51,8 +51,10 @@ export const projects: Project[] = [
     year: "2026",
     summary: "Gruppebestilling av skole-, revy- og russeklær, med designstudio for egen logo.",
     tech: ["TypeScript", "React", "Supabase/Postgres"],
-    links: [{ label: "Åpne", href: "https://campuswear-azure.vercel.app" }],
-    codeNote: "Privat kode",
+    links: [
+      { label: "Åpne", href: "https://campuswear-azure.vercel.app" },
+      { label: "Kode", href: "https://github.com/BenjaminKoder/everyday-hello-bot" },
+    ],
     image: "campuswear.jpg",
     color: "lavender",
   },
@@ -95,7 +97,10 @@ export const projects: Project[] = [
     year: "2026",
     summary: "Kart og database over lokaler og leverandører til arrangementer for Innovasjon Norge i Houston.",
     tech: ["TypeScript", "React", "Supabase/Postgres", "LLM-API-er"],
-    links: [{ label: "Åpne", href: "https://houston-venues.vercel.app" }],
+    links: [
+      { label: "Åpne", href: "https://houston-venues.vercel.app" },
+      { label: "Kode", href: "https://github.com/BenjaminKoder/houston-venues" },
+    ],
     image: "houston-venues.jpg",
     color: "lavender",
   },
@@ -105,7 +110,10 @@ export const projects: Project[] = [
     year: "2022",
     summary: "Promillekalkulator som regner ut omtrentlig promille med Widmarks formel.",
     tech: ["JavaScript", "HTML og CSS"],
-    links: [{ label: "Prøv", href: `${GITHUB_PAGES}/Spillsider/PilsKalkulator/index.html` }],
+    links: [
+      { label: "Prøv", href: `${GITHUB_PAGES}/Spillsider/PilsKalkulator/index.html` },
+      { label: "Kode", href: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/Spillsider/PilsKalkulator" },
+    ],
     image: "pilsulator.jpg",
     color: "blue",
   },
@@ -128,7 +136,10 @@ export const projects: Project[] = [
     year: "2022",
     summary: "Plattformspill på HTML5 Canvas med 15 baner og ledertavle i Firebase.",
     tech: ["JavaScript", "HTML og CSS", "Firebase"],
-    links: [{ label: "Spill", href: `${GITHUB_PAGES}/Spillsider/Canvasgamefreestyle/index.html` }],
+    links: [
+      { label: "Spill", href: `${GITHUB_PAGES}/Spillsider/Canvasgamefreestyle/index.html` },
+      { label: "Kode", href: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/Spillsider/Canvasgamefreestyle" },
+    ],
     image: "canvas-spill.jpg",
     color: "blue",
   },
@@ -161,8 +172,10 @@ export interface ArchiveItem {
   year: string;
   description: string;
   href: string;
-  /** "web" kan kjøres i nettleseren, "kode" lenker til kildekoden. */
+  /** "web" kan kjøres i nettleseren (href), "kode" har bare kildekode. */
   kind: "web" | "kode";
+  /** Lenke til kildekoden på GitHub. */
+  code: string;
   /** Filnavn i src/assets/projects. */
   image?: string;
 }
@@ -174,6 +187,7 @@ export const archive: ArchiveItem[] = [
     description: "Nettside om tallsystemer, bits og bytes",
     href: `${GITHUB_PAGES}/StorsteProsjekter/Tallsystemer/index.html`,
     kind: "web",
+    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter/Tallsystemer",
     image: "tallsystemer.jpg",
   },
   {
@@ -182,6 +196,7 @@ export const archive: ArchiveItem[] = [
     description: "Spinner med innlogging og ledertavle",
     href: `${GITHUB_PAGES}/Spillsider/SpinnerTob/saannBenjiVil/index.html`,
     kind: "web",
+    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/Spillsider/SpinnerTob/saannBenjiVil",
     image: "spinner-db.jpg",
   },
   {
@@ -190,6 +205,7 @@ export const archive: ArchiveItem[] = [
     description: "Spinner som lagrer i nettleseren",
     href: `${GITHUB_PAGES}/Spillsider/SpinnerTycoon/Spinner.html`,
     kind: "web",
+    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/Spillsider/SpinnerTycoon",
     image: "spinner-ls.jpg",
   },
   {
@@ -198,6 +214,7 @@ export const archive: ArchiveItem[] = [
     description: "Skytespill i Pygame",
     href: "https://github.com/BenjaminKoder/forste-pygame",
     kind: "kode",
+    code: "https://github.com/BenjaminKoder/forste-pygame",
     image: "sirkelspillet.jpg",
   },
   {
@@ -206,6 +223,7 @@ export const archive: ArchiveItem[] = [
     description: "Plattformspill i nettleseren",
     href: `${GITHUB_PAGES}/StorsteProsjekter/shyguy/index.html`,
     kind: "web",
+    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter/shyguy",
     image: "mario.jpg",
   },
   {
@@ -214,6 +232,7 @@ export const archive: ArchiveItem[] = [
     description: "Quiz i Pygame",
     href: "https://github.com/BenjaminKoder/forste-pygame",
     kind: "kode",
+    code: "https://github.com/BenjaminKoder/forste-pygame",
     image: "klassequiz.jpg",
   },
 ];

@@ -32,28 +32,35 @@ const Projects = () => {
           onMouseLeave={() => setHovered(null)}
         >
           {archive.map((item) => (
-            <li key={item.title} onMouseEnter={() => setHovered(item)}>
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 px-4 py-3 transition-colors hover:bg-periwinkle sm:px-6"
-              >
-                {item.image && (
-                  <img
-                    src={projectImage(item.image)}
-                    alt=""
-                    loading="lazy"
-                    className="h-10 w-16 shrink-0 rounded border-[1.5px] border-foreground object-cover object-top md:hidden"
-                  />
+            <li
+              key={item.title}
+              onMouseEnter={() => setHovered(item)}
+              className="flex items-center gap-4 px-4 py-3 transition-colors hover:bg-periwinkle sm:px-6"
+            >
+              {item.image && (
+                <img
+                  src={projectImage(item.image)}
+                  alt=""
+                  loading="lazy"
+                  className="h-10 w-16 shrink-0 rounded border-[1.5px] border-foreground object-cover object-top md:hidden"
+                />
+              )}
+              <span className="font-mono text-xs text-muted-foreground">{item.year}</span>
+              <span className="flex-1">
+                <span className="font-medium">{item.title}</span>
+                <span className="hidden text-muted-foreground sm:inline"> {item.description}</span>
+              </span>
+              {/* Kan prosjektet kjøres i nettleseren, vises både Kjør og Kode. Ellers bare Kode. */}
+              <span className="flex shrink-0 gap-2">
+                {item.kind === "web" && (
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" className="tag hover:bg-foreground hover:text-background">
+                    Kjør ↗
+                  </a>
                 )}
-                <span className="font-mono text-xs text-muted-foreground">{item.year}</span>
-                <span className="flex-1">
-                  <span className="font-medium">{item.title}</span>
-                  <span className="hidden text-muted-foreground sm:inline"> {item.description}</span>
-                </span>
-                <span className="tag shrink-0">{item.kind === "web" ? "Kjør ↗" : "Kode ↗"}</span>
-              </a>
+                <a href={item.code} target="_blank" rel="noopener noreferrer" className="tag hover:bg-foreground hover:text-background">
+                  Kode ↗
+                </a>
+              </span>
             </li>
           ))}
         </ul>
