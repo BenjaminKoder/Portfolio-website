@@ -2,7 +2,7 @@
 
 Porteføljesiden min, med prosjekter, kompetanse, CV og en AI-assistent som svarer på spørsmål om meg.
 
-**Live:** [portfolio-website-nine-silk-69.vercel.app](https://portfolio-website-nine-silk-69.vercel.app/)
+**Live:** [benjamin-eng.vercel.app](https://benjamin-eng.vercel.app/)
 
 <img src="docs/skjermbilde.jpg" alt="Skjermbilde av porteføljesiden" width="800">
 
