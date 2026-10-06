@@ -220,7 +220,7 @@ export const archive: ArchiveItem[] = [
   {
     title: "Mario",
     year: "2022",
-    description: "Plattformspill i nettleseren",
+    description: "Hoppespill i nettleseren",
     href: `${GITHUB_PAGES}/StorsteProsjekter/shyguy/index.html`,
     kind: "web",
     code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter/shyguy",
