@@ -147,7 +147,7 @@ export const projects: Project[] = [
     slug: "shake-that-jazz",
     title: "Shake That Jazz",
     year: "2023",
-    summary: "Pygame-spill med egne sprites og en butikk for oppgraderinger.",
+    summary: "Pygame-spill med sprites jeg har tegnet selv og en butikk for oppgraderinger.",
     tech: ["Python", "Pygame"],
     links: [
       { label: "Kode", href: "https://github.com/BenjaminKoder/shake-that-jazz" },
