@@ -24,7 +24,6 @@ export const skillGroups: SkillGroup[] = [
       "JavaFX",
       "JUnit",
       "Pygame",
-      "Lovable",
       "Git og GitHub",
     ],
   },
