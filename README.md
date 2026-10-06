@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# Portfolio-website
 
-## Project info
+Porteføljesiden min, med prosjekter, kompetanse, CV og en AI-assistent som svarer på spørsmål om meg.
 
-**URL**: https://lovable.dev/projects/028a9c92-fb4d-4acf-87a9-5cbf140d28b2
+**Live:** [portfolio-website-nine-silk-69.vercel.app](https://portfolio-website-nine-silk-69.vercel.app/)
 
-## How can I edit this code?
+<img src="docs/skjermbilde.jpg" alt="Skjermbilde av porteføljesiden" width="800">
 
-There are several ways of editing your application.
+## Teknologi
 
-**Use Lovable**
+| | |
+|---|---|
+| Frontend | React 18, TypeScript, Vite |
+| Styling | Tailwind CSS, egne designvariabler i `src/index.css` |
+| Skjema | react-hook-form og zod |
+| Serverfunksjoner | Vercel Functions i `api/` |
+| AI-assistent | Claude Sonnet 5.5 via Anthropic SDK |
+| E-post | Resend |
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/028a9c92-fb4d-4acf-87a9-5cbf140d28b2) and start prompting.
+Siden ble først laget i Lovable, og er deretter skrevet om lokalt.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Struktur
 
-**Use your preferred IDE**
+```
+src/
+├── content/        Alt innhold: prosjekter, ferdigheter, CV og profil
+├── components/     React-komponentene som viser innholdet
+├── assets/         Profilbilde og skjermbilder av prosjektene
+└── lib/            Hjelpefunksjoner (fargepalett, bildeoppslag)
+api/
+├── chat.ts         AI-assistenten
+├── contact.ts      Kontaktskjemaet
+├── _knowledge.ts   Bygger systemprompten fra src/content
+└── _rateLimit.ts   Enkel grense for antall forespørsler
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Innhold og visning er skilt: for å legge til et prosjekt endrer man bare `src/content/projects.ts`. Kortet, ferdighetene i Kompetanse og AI-assistentens kunnskap oppdateres automatisk.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Slik fungerer AI-assistenten
 
-Follow these steps:
+1. Chatten i nettleseren sender samtalen til `/api/chat`.
+2. `api/_knowledge.ts` bygger en systemprompt av de samme datafilene som siden bruker: prosjekter, CV og ferdigheter. Assistenten vet dermed bare det som står på siden.
+3. Serverfunksjonen sender systemprompten og de siste meldingene til Claude og returnerer svaret.
+4. Systemprompten ber assistenten svare kort, bare ut fra faktaene, uten å vurdere ferdighetsnivå, og henvise til e-post når den ikke vet svaret.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+API-nøkkelen finnes bare på serveren. Hver IP-adresse kan stille 20 spørsmål per ti minutter, og meldingene er begrenset til 1000 tegn.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Kjør lokalt
 
-# Step 3: Install the necessary dependencies.
-npm i
+Krever Node.js 20 eller nyere.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
+cp .env.example .env.local   # fyll inn nøklene
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Siden kjører på http://localhost:8080. En liten Vite-utvidelse i `vite.config.ts` kjører funksjonene i `api/` lokalt, slik Vercel gjør i produksjon.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Miljøvariabler
 
-**Use GitHub Codespaces**
+| Variabel | Brukes til |
+|---|---|
+| `ANTHROPIC_API_KEY` | AI-assistenten |
+| `RESEND_API_KEY` | Kontaktskjemaet |
+| `CONTACT_FROM` | Avsenderadresse på et domene som er verifisert i Resend |
+| `CONTACT_TO` | Hvor meldingene fra skjemaet sendes |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/028a9c92-fb4d-4acf-87a9-5cbf140d28b2) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+På Vercel legges de samme variablene inn under Settings → Environment Variables.
