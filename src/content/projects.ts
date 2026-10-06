@@ -105,6 +105,19 @@ export const projects: Project[] = [
     color: "lavender",
   },
   {
+    slug: "consulteng",
+    title: "ConsultEng",
+    year: "2024–",
+    summary: "Webstudio jeg driver alene, som lager nettsider for nyetablerte bedrifter.",
+    tech: ["TypeScript", "React", "Make.com"],
+    links: [
+      { label: "consulteng.no", href: "https://consulteng.no" },
+      { label: "Kode", href: "https://github.com/BenjaminKoder/consulteng-web-studio" },
+    ],
+    image: "consulteng.jpg",
+    color: "periwinkle",
+  },
+  {
     slug: "pilsulator",
     title: "Pilsulator",
     year: "2022",
