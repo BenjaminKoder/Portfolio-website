@@ -5,7 +5,7 @@
 //   CONTACT_TO      mottaker, f.eks. "deg@ditt-domene.no"
 
 import { z } from "zod";
-import { isRateLimited } from "./_rateLimit";
+import { isRateLimited } from "./_rateLimit.js";
 
 const bodySchema = z.object({
   name: z.string().trim().min(1).max(100),

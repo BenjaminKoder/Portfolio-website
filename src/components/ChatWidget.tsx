@@ -45,8 +45,9 @@ const ChatWidget = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: history }),
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? "Failed to get response");
+      // Serveren svarer med JSON, men ved krasj kan svaret være ren tekst
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.reply) throw new Error(data.error ?? "Failed to get response");
 
       setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
     } catch (error) {

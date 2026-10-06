@@ -1,10 +1,10 @@
 // Bygger systemprompten til AI-assistenten fra de samme datafilene som nettsiden bruker.
 // Filnavn som starter med _ blir ikke egne endepunkter på Vercel.
 
-import { profile } from "../src/content/profile";
-import { projects, archive } from "../src/content/projects";
-import { skillGroups } from "../src/content/skills";
-import { timeline } from "../src/content/timeline";
+import { profile } from "../src/content/profile.js";
+import { projects, archive } from "../src/content/projects.js";
+import { skillGroups } from "../src/content/skills.js";
+import { timeline } from "../src/content/timeline.js";
 
 const projectFacts = projects
   .map((p) => {

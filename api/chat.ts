@@ -4,8 +4,8 @@
 
 import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
-import { systemPrompt } from "./_knowledge";
-import { isRateLimited } from "./_rateLimit";
+import { systemPrompt } from "./_knowledge.js";
+import { isRateLimited } from "./_rateLimit.js";
 
 const MODEL = "claude-sonnet-5-5";
 const MAX_HISTORY = 10;
