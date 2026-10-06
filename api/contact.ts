@@ -12,7 +12,7 @@ const bodySchema = z.object({
   email: z.string().trim().email().max(255),
   message: z.string().trim().min(1).max(1000),
   // Skjult felt som bare roboter fyller ut
-  website: z.string().max(0).optional(),
+  hp_field_x: z.string().optional(),
 });
 
 const json = (data: unknown, status = 200) =>
@@ -30,10 +30,13 @@ export async function POST(request: Request) {
   if (!parsed.success) {
     return json({ error: "Sjekk at alle feltene er fylt ut riktig." }, 400);
   }
-  const { name, email, message, website } = parsed.data;
+  const { name, email, message, hp_field_x } = parsed.data;
 
   // Roboter som fyller ut det skjulte feltet får et vanlig svar, men ingen e-post sendes.
-  if (website) return json({ ok: true });
+  if (hp_field_x) {
+    console.warn("Kontaktskjema: skjult felt var fylt ut, meldingen ble ikke sendt");
+    return json({ ok: true });
+  }
 
   const { RESEND_API_KEY, CONTACT_FROM, CONTACT_TO } = process.env;
   if (!RESEND_API_KEY || !CONTACT_FROM || !CONTACT_TO) {

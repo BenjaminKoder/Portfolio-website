@@ -11,7 +11,8 @@ const contactFormSchema = z.object({
   email: z.string().trim().email("Ugyldig e-postadresse").max(255, "E-postadressen må være kortere enn 255 tegn"),
   message: z.string().trim().min(1, "Melding er påkrevd").max(1000, "Meldingen må være kortere enn 1000 tegn"),
   // Skjult felt mot spam. Mennesker ser det ikke, roboter fyller det ut.
-  website: z.string().optional(),
+  // Navnet er valgt så nettleserens autofyll ikke kjenner det igjen.
+  hp_field_x: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -113,7 +114,7 @@ const Contact = () => {
               {errors.message && <p className="mt-1 text-sm text-destructive">{errors.message.message}</p>}
             </div>
             <input
-              {...register("website")}
+              {...register("hp_field_x")}
               type="text"
               tabIndex={-1}
               autoComplete="off"
