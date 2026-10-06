@@ -68,7 +68,7 @@ export const timeline: TimelineEntry[] = [
     org: "DigiSaga",
     kind: "Prosjekt",
     points: [
-      "Lager nettsider og AI-automatisering for norske bedrifter sammen med en medstudent, med Supabase, OpenAI API og Make.com.",
+      "Lager nettsider og AI-automatisering for norske bedrifter sammen med Emil Skotner, med Supabase, OpenAI API og Make.com.",
       "Flere av prosjektene på denne siden er laget her.",
     ],
     link: { label: "Se prosjektene", href: "#prosjekter" },
