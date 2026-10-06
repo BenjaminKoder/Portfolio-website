@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   role: "user" | "assistant";
@@ -10,7 +9,6 @@ interface Message {
 }
 
 const ChatWidget = () => {
-  const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -40,49 +38,26 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      const webhookUrl = "https://hook.eu2.make.com/h8ikhnbpul7vf54itmycfn6ai2b8kuv2";
-      
-      const response = await fetch(webhookUrl, {
+      // Hele samtalen sendes, så assistenten husker hva som er sagt. Serveren kutter den ned.
+      const history = [...messages, { role: "user" as const, content: userMessage }];
+      const response = await fetch("/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: userMessage,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: history }),
       });
+      // Serveren svarer med JSON, men ved krasj kan svaret være ren tekst
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.reply) throw new Error(data.error ?? "Failed to get response");
 
-      if (response.ok) {
-        const responseText = await response.text();
-        
-        // Try to parse as JSON first, otherwise use plain text
-        let aiResponse;
-        try {
-          const data = JSON.parse(responseText);
-          aiResponse = data.response || responseText;
-        } catch {
-          // If not JSON, use the plain text response
-          aiResponse = responseText;
-        }
-        
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: aiResponse || "Beklager, jeg kunne ikke behandle det spørsmålet." },
-        ]);
-      } else {
-        throw new Error("Failed to get response");
-      }
+      setMessages((prev) => [...prev, { role: "assistant", content: data.reply }]);
     } catch (error) {
-      toast({
-        title: "Noe gikk galt",
-        description: "Kunne ikke få svar fra AI-assistenten. Prøv igjen senere.",
-        variant: "destructive",
-      });
+      // Serveren sender en forklarende feilmelding, f.eks. ved for mange spørsmål
+      const reason = error instanceof Error && error.message !== "Failed to get response" ? error.message : null;
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Beklager, jeg opplever tekniske problemer. Vennligst prøv igjen senere.",
+          content: reason ?? "Assistenten svarer ikke akkurat nå. Send gjerne en e-post i stedet.",
         },
       ]);
     } finally {
@@ -95,7 +70,8 @@ const ChatWidget = () => {
       {/* Chat Button */}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-accent hover:bg-accent/90 text-accent-foreground z-50"
+        aria-label={isOpen ? "Lukk AI-assistenten" : "Åpne AI-assistenten"}
+        className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full border-2 border-foreground bg-blue text-white shadow-[3px_3px_0_0_hsl(var(--foreground))] hover:bg-periwinkle hover:text-foreground"
         size="icon"
       >
         {isOpen ? (
@@ -107,11 +83,11 @@ const ChatWidget = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] h-[500px] bg-background border border-border rounded-lg shadow-xl z-50 flex flex-col animate-scale-in">
+        <div className="fixed bottom-20 right-5 z-50 flex h-[480px] max-h-[calc(100vh-7rem)] w-96 max-w-[calc(100vw-2.5rem)] flex-col rounded-xl border-2 border-foreground bg-card shadow-[5px_5px_0_0_hsl(var(--foreground))] overflow-hidden animate-scale-in">
           {/* Header */}
-          <div className="p-4 border-b border-border bg-gradient-hero text-primary-foreground rounded-t-lg">
-            <h3 className="font-semibold">Spør Benjamin</h3>
-            <p className="text-sm opacity-90">AI-assistent</p>
+          <div className="border-b-2 border-foreground bg-periwinkle p-4">
+            <h3 className="font-display text-lg font-bold">Spør om Benjamin</h3>
+            <p className="mt-1 font-mono text-xs">AI-assistent</p>
           </div>
 
           {/* Messages */}
@@ -124,20 +100,20 @@ const ChatWidget = () => {
                 }`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
+                  className={`max-w-[85%] rounded-lg border-[1.5px] border-foreground px-3 py-2 ${
                     message.role === "user"
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-secondary text-foreground"
+                      ? "bg-periwinkle"
+                      : "bg-card"
                   }`}
                 >
-                  <p className="text-sm">{message.content}</p>
+                  <p className="whitespace-pre-line text-sm">{message.content}</p>
                 </div>
               </div>
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-secondary text-foreground rounded-lg p-3">
-                  <p className="text-sm">Skriver...</p>
+                <div className="rounded-lg border-[1.5px] border-foreground px-3 py-2">
+                  <p className="font-mono text-sm">skriver…</p>
                 </div>
               </div>
             )}
@@ -145,20 +121,20 @@ const ChatWidget = () => {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-border">
+          <form onSubmit={handleSubmit} className="border-t-2 border-foreground p-4">
             <div className="flex gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Skriv ditt spørsmål..."
                 disabled={isLoading}
-                className="flex-1"
+                className="flex-1 rounded-lg border-2 border-foreground"
               />
               <Button
                 type="submit"
                 disabled={isLoading || !input.trim()}
                 size="icon"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground"
+                className="rounded-lg border-2 border-foreground bg-blue text-white hover:bg-periwinkle hover:text-foreground"
               >
                 <Send className="h-4 w-4" />
               </Button>

@@ -1,49 +1,80 @@
-import { ArrowDown } from "lucide-react";
 import profileImage from "@/assets/profile.png";
+import { profile } from "@/content/profile";
+import { skillGroups } from "@/content/skills";
+
+const links = [
+  { label: "GitHub", href: profile.github, color: "bg-blue text-white" },
+  { label: "LinkedIn", href: profile.linkedin, color: "bg-periwinkle" },
+  { label: "CV", href: profile.cv, color: "bg-ice" },
+  { label: "E-post", href: `mailto:${profile.email}`, color: "bg-lavender" },
+];
+
+// Alle ferdighetene i én liste, til båndet som ruller under toppen.
+const ticker = skillGroups.flatMap((group) => group.skills);
 
 const Hero = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <section id="hjem" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-      {/* Background gradient with smooth transition */}
-      <div className="absolute inset-0 bg-gradient-section opacity-40"></div>
-      <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+    <header id="top" className="relative overflow-hidden pt-28 lg:pt-36">
+      <div className="container-wide">
+        <div className="grid items-center gap-12 lg:grid-cols-[1fr_auto]">
+          <div>
+            <div className="mb-6 flex flex-wrap gap-2">
+              <span className="tag -rotate-2 bg-periwinkle">NTNU</span>
+              <span className="tag rotate-1 bg-lavender">Indøk</span>
+              <span className="tag -rotate-1 bg-ice">Web + AI</span>
+            </div>
+            <h1 className="isolate font-display text-[clamp(3.25rem,11vw,8.5rem)] font-extrabold leading-[0.9] tracking-tight">
+              Benjamin
+              <br />
+              <span className="relative inline-block">
+                <span className="absolute inset-x-[-0.08em] -bottom-[0.02em] top-[0.55em] -z-10 -rotate-1 rounded-md bg-periwinkle" aria-hidden />
+                <span className="text-blue">Eng</span>
+              </span>
+            </h1>
+            <p className="mt-8 max-w-xl text-lg leading-relaxed sm:text-xl">{profile.tagline}</p>
 
-      {/* Smooth bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background/80"></div>
+            <ul className="mt-10 flex flex-wrap gap-3">
+              {links.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                    rel="noopener noreferrer"
+                    className={`btn ${link.color}`}
+                  >
+                    {link.label} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
-          <div className="mb-6 flex justify-center">
+          <div className="relative mx-auto w-52 sm:w-64 lg:w-72">
+            <div className="absolute inset-0 translate-x-3 translate-y-3 rotate-3 rounded-[2rem] border-2 border-foreground bg-blue" aria-hidden />
             <img
               src={profileImage}
-              alt="Benjamin Eng"
-              className="w-32 h-32 rounded-full object-cover border-2 border-primary/20 shadow-elegant"
+              alt={profile.name}
+              className="relative aspect-square w-full -rotate-2 rounded-[2rem] border-2 border-foreground object-cover"
             />
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6">Benjamin Eng</h1>
-          <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-            Jeg er student innen datateknologi ved NTNU og utvikler innen web og AI-integrasjoner. Dette er min
-            portefølje.
-          </p>
-
-          <button
-            onClick={() => scrollToSection("prosjekter")}
-            className="mt-12 inline-flex items-center gap-2 text-accent hover:text-primary transition-colors group"
-            aria-label="Scroll til prosjekter"
-          >
-            <span className="text-sm font-medium">Se hva jeg holder på med</span>
-            <ArrowDown className="h-5 w-5 group-hover:translate-y-1 transition-transform" />
-          </button>
         </div>
       </div>
-    </section>
+
+      {/* Båndet er bredere enn skjermen og har luft under, så skråstillingen aldri kutter det */}
+      <div className="-mx-[5vw] mb-8 mt-20 w-[110vw] -rotate-1 overflow-hidden border-y-2 border-foreground bg-foreground py-3 text-background lg:mt-28">
+        <div className="flex w-max animate-[marquee_40s_linear_infinite] gap-8 whitespace-nowrap font-mono text-sm">
+          {/* Listen ligger to ganger etter hverandre, så animasjonen kan gå i loop uten hopp */}
+          {[...ticker, ...ticker].map((skill, i) => (
+            <span key={i} className="flex items-center gap-8">
+              {skill}
+              <span className="text-periwinkle" aria-hidden>
+                ✳
+              </span>
+            </span>
+          ))}
+        </div>
+      </div>
+    </header>
   );
 };
 
