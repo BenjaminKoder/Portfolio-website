@@ -182,6 +182,15 @@ export interface ArchiveItem {
 
 export const archive: ArchiveItem[] = [
   {
+    title: "Benjamins prosjekter",
+    year: "2021–2022",
+    description: "De første prosjektene jeg lagde, som viser utviklingen min",
+    href: `${GITHUB_PAGES}/StorsteProsjekter/StorsteProsjekter.html`,
+    kind: "web",
+    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter",
+    image: "benjamins-prosjekter.jpg",
+  },
+  {
     title: "Tallsystemer",
     year: "2022",
     description: "Nettside om tallsystemer, bits og bytes",
@@ -216,23 +225,5 @@ export const archive: ArchiveItem[] = [
     kind: "kode",
     code: "https://github.com/BenjaminKoder/forste-pygame",
     image: "sirkelspillet.jpg",
-  },
-  {
-    title: "Mario",
-    year: "2022",
-    description: "Hoppespill i nettleseren",
-    href: `${GITHUB_PAGES}/StorsteProsjekter/shyguy/index.html`,
-    kind: "web",
-    code: "https://github.com/BenjaminKoder/BenjaminKoder.github.io/tree/main/StorsteProsjekter/shyguy",
-    image: "mario.jpg",
-  },
-  {
-    title: "Klassequiz",
-    year: "2022",
-    description: "Quiz i Pygame",
-    href: "https://github.com/BenjaminKoder/forste-pygame",
-    kind: "kode",
-    code: "https://github.com/BenjaminKoder/forste-pygame",
-    image: "klassequiz.jpg",
   },
 ];
