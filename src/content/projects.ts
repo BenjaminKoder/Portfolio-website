@@ -39,7 +39,7 @@ export const projects: Project[] = [
     tech: ["TypeScript", "React", "Twilio"],
     links: [
       { label: "Booking", href: "https://peer-booking.lovable.app" },
-      { label: "Peer CRM", href: "https://peer-crm.lovable.app" },
+      { label: "Peer CRM", href: "https://peer-crm.vercel.app" },
     ],
     codeNote: "Sammen med Emil Skotner",
     image: "peer.jpg",
